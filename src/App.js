@@ -1,18 +1,35 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import Main from "./components/public/main"
 
 
-function App() {
+class AppContainer extends React.Component {
+
+  render() {
+    const { isLoggedIn } = this.props.authentication;
+    return <App isLoggedIn={isLoggedIn} />
+  }
+}
+
+
+function App({ isLoggedIn }) {
 
 
   return (
 
     <div className="App">
-      <h1>
-        treduler
-      </h1>
+
+      {isLoggedIn ? "logged in" : <Main />}
+
 
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    authentication: state.authentication
+  }
+}
+
+export default connect(mapStateToProps, {})(AppContainer);
