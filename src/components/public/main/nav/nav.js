@@ -4,9 +4,14 @@ import styled from 'styled-components'
 const Row = styled.div`
     display:flex;
     align-items:center;
-    padding:15px;
+    padding-top:15px;
+    padding-bottom:15px;
     background-color:#F8F9F9;
     justify-content:space-between;
+    position:fixed;
+    top:0;
+    width:100%;
+    left:0;
 `;
 
 const TredulerIconContainer = styled.div`
@@ -30,6 +35,7 @@ user-select:none;
 const TredulerTextAndImageContainer = styled.div`
     display:flex;
     align-items:center;
+    margin-left:15px;
 `
 
 const LoginButton = styled.a`
@@ -72,6 +78,7 @@ background: linear-gradient(to bottom, #61BD4F 0%, #5AAC44 100%);
 const LoginAndSignUpButtonContainer = styled.div`
     display:flex;
     align-items:center;
+    margin-right:15px;
 `
 
 
@@ -88,7 +95,9 @@ const Nav = () => (
         </TredulerTextAndImageContainer>
         <LoginAndSignUpButtonContainer>
             <LoginButton>Login</LoginButton>
-            <SignUpButton>Sign Up</SignUpButton>
+            <a href={'/sign-up'}>
+                <SignUpButton>Sign Up</SignUpButton>
+            </a>
         </LoginAndSignUpButtonContainer>
     </Row>
 )

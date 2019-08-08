@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import Main from "./components/public/main"
+import PublicAppRouter from './components/public/routes'
 
 
 class AppContainer extends React.Component {
@@ -19,7 +19,7 @@ function App({ isLoggedIn }) {
 
     <div className="App">
 
-      {isLoggedIn ? "logged in" : <Main />}
+      {isLoggedIn ? "logged in" : <PublicAppRouter />}
 
 
     </div>
