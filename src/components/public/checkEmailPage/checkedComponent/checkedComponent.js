@@ -19,14 +19,6 @@ const BigWhiteText = styled.div`
 
 `
 
-const NormalWhiteText = styled.div`
-font-size: 35px;
-    margin-bottom: 50px;
-`
-
-const TinyWhiteText = styled.div`
-`
-
 const ResendButton = styled.button`
 background: #27ae60;
     border-radius: 4px;
@@ -42,16 +34,20 @@ background: #27ae60;
     }
 `
 
+class CheckedComponent extends React.Component {
 
-class PageSendEmail extends React.Component {
     render() {
+        const { goToLogin } = this;
         return <Container>
-            <BigWhiteText>We've sent you a verification email</BigWhiteText>
-            <NormalWhiteText>Please check your email</NormalWhiteText>
-            <TinyWhiteText>Don't you receive any mail?</TinyWhiteText>
-            <ResendButton>Then click here to request sending email</ResendButton>
+            <BigWhiteText>Your email now verified!</BigWhiteText>
+            <ResendButton onClick={goToLogin}>Go to login</ResendButton>
         </Container>
     }
+
+    goToLogin = () => {
+        window.location.href = "/login"
+    }
+
 }
 
-export default PageSendEmail
+export default CheckedComponent;
