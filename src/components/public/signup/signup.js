@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Copyright from '../../global/copyright'
+import axios from 'axios'
 
 const Container = styled.div`
     display:flex;
@@ -61,7 +62,7 @@ class SignUp extends React.Component {
     }
     render() {
         const { allInputNotChecked, name, email, password } = this.state;
-        const { handleInput } = this;
+        const { handleInput, createNewAccountButtonTapped } = this;
         return (
             <Container>
                 <Card>
@@ -73,14 +74,37 @@ class SignUp extends React.Component {
                     <NormalText>Email</NormalText>
                     <Input name={'email'} onChange={handleInput} value={email} placeholder={'e.g., threepwood@grogmail.com'} />
                     <NormalText>{'Password'}</NormalText>
-                    <Input name={'password'} onChange={handleInput} value={password} placeholder={'e.g., **********'} />
-                    <CreateNewAccountButton disabled={allInputNotChecked}>
+                    <Input type={'password'} name={'password'} onChange={handleInput} value={password} placeholder={'e.g., **********'} />
+                    <CreateNewAccountButton onClick={createNewAccountButtonTapped} disabled={allInputNotChecked}>
                         Create New Account
                 </CreateNewAccountButton>
                 </Card>
                 <Copyright />
             </Container>
         )
+    }
+
+    createNewAccountButtonTapped = () => {
+        const { name, email, password } = this.state;
+        axios.post('/api/user/', {
+            name,
+            email,
+            password
+        })
+            .then(res => {
+                console.log('res.status: ', res.status)
+                return res.data
+            })
+            .then(data => {
+                console.log(data)
+                if (data.ok === false) {
+                    alert(data.message)
+                    return
+                }
+            })
+            .catch(err => {
+                console.error(err)
+            })
     }
 
     handleInput = (e) => {
