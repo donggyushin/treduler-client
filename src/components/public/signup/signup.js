@@ -40,7 +40,6 @@ width: 97.5%;
 
 const CreateNewAccountButton = styled.button`
     width: 100%;
-    /* text-align: center; */
     background:${props => props.disabled ? `#EDEFF0` : `#27ae60`};
     border-radius: 4px;
     border: 1px solid #CDD2D4;
