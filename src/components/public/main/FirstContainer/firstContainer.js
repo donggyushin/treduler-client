@@ -21,18 +21,27 @@ const BigText = styled.div`
 const NormalText = styled.div`
     font-size: 20px;
     margin-bottom: 20px;
+    color:#bdc3c7;
 `;
 
 const NormalGreyText = styled.div`
     color:#bdc3c7;
 `
 
+const A = styled.a`
+    text-decoration:none;
+`
+
 function FirstContainerComponent() {
     return (
         <FirstContainer>
             <BigText>Login to treduler</BigText>
-            <NormalText>or create an account</NormalText>
-            <NormalGreyText>log in with email and password</NormalGreyText>
+            <A href={'/sign-up'}>
+                <NormalText>or create an account</NormalText>
+            </A>
+            <A href={'/login'}>
+                <NormalGreyText>log in with email and password</NormalGreyText>
+            </A>
         </FirstContainer>
     )
 }

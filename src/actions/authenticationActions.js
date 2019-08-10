@@ -1,8 +1,17 @@
 import axios from 'axios';
-import { LOGIN_USER } from './type';
+import { LOGIN_USER, LOGOUT_USER, REMOVE_USER_INFO } from './type';
+
+export const logoutUser = () => dispatch => {
+
+    dispatch({
+        type: LOGOUT_USER
+    })
+    dispatch({
+        type: REMOVE_USER_INFO
+    })
+}
 
 export const loginUser = (email, password) => dispatch => {
-    console.log(email, password)
     axios.post('/api/user/login', {
         email,
         password

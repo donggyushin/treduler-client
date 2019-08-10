@@ -79,7 +79,7 @@ class Login extends React.Component {
                 <NormalText>
                     Password
                 </NormalText>
-                <Input name={'password'} value={password} onChange={handleInput} placeholder={'e.g., **********'} />
+                <Input type={'password'} name={'password'} value={password} onChange={handleInput} placeholder={'e.g., **********'} />
                 <Button onClick={loginButtonClicked} disabled={buttonDisabled}>Login</Button>
             </LoginForm>
             <Margin />

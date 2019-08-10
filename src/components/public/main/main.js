@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Nav from './nav';
 import FirstContainer from './FirstContainer';
 import SecondContainerComponent from './SecondContainer';
+import Copyright from './copyright';
+import ThirdContainer from './thirdContainer';
 
 
 const Container = styled.div`
@@ -34,6 +36,8 @@ class Main extends React.Component {
             <Nav navigationHasBackgroundColor={navigationHasBackgroundColor} />
             <FirstContainer />
             <SecondContainerComponent />
+            <ThirdContainer />
+            <Copyright />
         </Container>
     }
 

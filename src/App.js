@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import PublicAppRouter from './components/public/routes'
+import PrivateAppRouter from './components/private/routes'
+import 'antd/dist/antd.css'
 
 
 class AppContainer extends React.Component {
@@ -19,7 +21,7 @@ function App({ isLoggedIn }) {
 
     <div className="App">
 
-      {isLoggedIn ? "logged in" : <PublicAppRouter />}
+      {isLoggedIn ? <PrivateAppRouter /> : <PublicAppRouter />}
 
 
     </div>
