@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Main from '../main'
+import LoggedOut from '../loggedOut'
 import SignUp from '../signup'
 import PageSendEmail from '../pageSendEmail'
 import CheckEmailPage from '../checkEmailPage';
 import Login from '../login';
+import Main from '../main'
 
 function PublicAppRouter() {
     return (
@@ -15,6 +16,7 @@ function PublicAppRouter() {
                 <Route path={'/send-email-page'} component={PageSendEmail} />
                 <Route path={'/check-email-page'} component={CheckEmailPage} />
                 <Route path={'/login'} component={Login} />
+                <Route path={'/loggedOut'} component={LoggedOut} />
                 <Route component={Main} />
             </Switch>
         </Router>

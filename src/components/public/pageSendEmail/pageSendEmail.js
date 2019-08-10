@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios'
 
 const Container = styled.div`
     width:100%;
@@ -45,12 +46,25 @@ background: #27ae60;
 
 class PageSendEmail extends React.Component {
     render() {
+        const { resendButtonClicked } = this;
         return <Container>
             <BigWhiteText>We've sent you a verification email</BigWhiteText>
             <NormalWhiteText>Please check your email</NormalWhiteText>
             <TinyWhiteText>Don't you receive any mail?</TinyWhiteText>
-            <ResendButton>Then click here to request sending email</ResendButton>
+            <ResendButton onClick={resendButtonClicked}>Then click here to request sending email</ResendButton>
         </Container>
+    }
+
+    resendButtonClicked = () => {
+        const email = window.localStorage.getItem('email');
+        axios.post('/api/verification/', {
+            email
+        })
+            .then(res => res.data)
+            .then(data => {
+                alert(data.message)
+            })
+            .catch(err => console.error(err))
     }
 }
 

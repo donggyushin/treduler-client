@@ -30,7 +30,7 @@ margin-bottom:10px;
 
 const Input = styled.input`
 width: 97.5%;
-    height: 36px;
+    height: 50px;
     font-size: 20px;
     padding-left: 10px;
     margin-bottom: 38px;
@@ -100,6 +100,9 @@ class SignUp extends React.Component {
                 if (data.ok === false) {
                     alert(data.message)
                     return
+                } else {
+                    window.localStorage.setItem('email', this.state.email)
+                    window.location.href = "/send-email-page"
                 }
             })
             .catch(err => {

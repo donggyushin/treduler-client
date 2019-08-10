@@ -1,105 +1,66 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-const Row = styled.div`
+const Container = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     display:flex;
-    align-items:center;
-    padding-top:15px;
-    padding-bottom:15px;
-    background-color:#F8F9F9;
+    color:white;
+    transition-duration:0.5s;
+    background:${props => props.navigationHasBackgroundColor === true ? '#0079bf' : 'rgba( 255, 255, 255, 0)'};
     justify-content:space-between;
-    position:fixed;
-    top:0;
-    width:100%;
-    left:0;
-`;
-
-const TredulerIconContainer = styled.div`
-    width:40px;
+    align-items:center;
+    height:86px;
 `
 
-const TredulerIcon = styled.img`
-    width:100%;
-    opacity:0.3;
-`
-
-const TredulerText = styled.div`
-    opacity:0.3;
-    font-size:40px;
-    font-weight:400;
+const LogoText = styled.div`
+    font-size: 45px;
+    margin-left: 39px;
     font-family: 'Libre Baskerville', serif;
 font-family: 'Lobster', cursive;
 user-select:none;
 `
 
-const TredulerTextAndImageContainer = styled.div`
-    display:flex;
-    align-items:center;
-    margin-left:15px;
-`
-
-const LoginButton = styled.a`
-background-color: #E2E4E6;
-    border-radius: .4em;
-    box-shadow: 0 2px 0 #CDD2D4;
-    color: hsl(0,0%,30%);
-    display: inline-block;
-    font-size: .8em;
-    line-height: 1.1em;
-    margin: 0 .25em;
-    padding: .7em 1.3em;
-    text-decoration: none;
-    vertical-align: top;
-    font-size:16px;
-    :hover {
-        background-color: #D6DADC;
-    }
-`
-const SignUpButton = styled.a`
-background: linear-gradient(to bottom, #61BD4F 0%, #5AAC44 100%);
-    box-shadow: 0 2px 0 #3F6F21;
-    font-weight: bold;
-    background-color: #E2E4E6;
-    border-radius: .4em;
-    box-shadow: 0 2px 0 #CDD2D4;
+const LoginButton = styled.button`
+    background: rgba(255,255,255, 0);
+    border: 0;
     color: white;
-    display: inline-block;
-    font-size: .8em;
-    line-height: 1.1em;
-    margin: 0 .25em;
-    padding: .7em 1.3em;
-    text-decoration: none;
-    vertical-align: top;
-    font-size:16px;
-    :hover {
-        background: linear-gradient(to bottom, #5AAC44 0%, #519839 100%);
-  }
+    font-size: 20px;
+    margin-right: 10px;
+    font-weight: 600;
+    cursor: pointer;
 `
-const LoginAndSignUpButtonContainer = styled.div`
-    display:flex;
-    align-items:center;
+const SignupButton = styled.button`
+        border: 0;
+    background-color: white;
+    color: #3498db;
+    border-radius: 4px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+`
+const ButtonContainer = styled.div`
     margin-right:15px;
 `
 
+class Nav extends React.Component {
+    render() {
+        const { navigationHasBackgroundColor } = this.props;
+        return <Container navigationHasBackgroundColor={navigationHasBackgroundColor}>
 
+            <LogoText>Treduler</LogoText>
+            <ButtonContainer>
+                <a href={'/login'}>
+                    <LoginButton>Log in</LoginButton>
+                </a>
+                <a href={'/sign-up'}>
+                    <SignupButton>Sign up</SignupButton>
+                </a>
+            </ButtonContainer>
+        </Container>
+    }
+}
 
-const Nav = () => (
-    <Row>
-        <TredulerTextAndImageContainer>
-            <TredulerIconContainer>
-                <TredulerIcon src={require('../../../../assets/images/treduler.png')} />
-            </TredulerIconContainer>
-            <TredulerText>
-                Treduler
-                    </TredulerText>
-        </TredulerTextAndImageContainer>
-        <LoginAndSignUpButtonContainer>
-            <LoginButton>Login</LoginButton>
-            <a href={'/sign-up'}>
-                <SignUpButton>Sign Up</SignUpButton>
-            </a>
-        </LoginAndSignUpButtonContainer>
-    </Row>
-)
-
-export default Nav;
+export default Nav
