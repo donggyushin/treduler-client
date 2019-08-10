@@ -9,7 +9,7 @@ const NavigationContainer = styled.div`
     width:100%;
     display:flex;
     justify-content:space-between;
-    padding:3px;
+    
     background:#026aa7;
     color:white;
     align-items:center;
@@ -22,6 +22,7 @@ const LeftContainer = styled.div`
     display:flex;
 `
 const HomeIconContainer = styled.div`
+margin-left:4px;
     background:hsla(0,0%,100%,.3);
     padding: 6px;
     border-radius: 4px;
@@ -63,6 +64,7 @@ const ProfileImageContainer = styled.div`
     border-radius:50%;
     overflow:hidden;
     margin-right:8px;
+    
 `
 
 const ProfileImage = styled.img`

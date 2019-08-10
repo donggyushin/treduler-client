@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Copyright from '../../global/copyright';
 import { connect } from 'react-redux'
 import { loginUser } from '../../../actions/authenticationActions'
+import { Helmet } from 'react-helmet'
 
 
 const Container = styled.div`
@@ -54,6 +55,7 @@ const Button = styled.button`
     font-weight: bold;
     color:${props => props.disabled ? `rgb(140, 140, 140)` : `white`};
     font-size:23px;
+    cursor: pointer;
 `
 
 const Margin = styled.div`
@@ -67,9 +69,12 @@ class Login extends React.Component {
         buttonDisabled: true
     }
     render() {
-        const { handleInput, loginButtonClicked } = this;
+        const { handleInput, loginButtonClicked, enterKeyPressed } = this;
         const { email, password, buttonDisabled } = this.state;
         return <Container>
+            <Helmet>
+                <title>Login | Treduler</title>
+            </Helmet>
             <LoginForm>
                 <BigText>Login to treduler</BigText>
                 <NormalText>
@@ -79,12 +84,21 @@ class Login extends React.Component {
                 <NormalText>
                     Password
                 </NormalText>
-                <Input type={'password'} name={'password'} value={password} onChange={handleInput} placeholder={'e.g., **********'} />
+                <Input onKeyPress={enterKeyPressed} type={'password'} name={'password'} value={password} onChange={handleInput} placeholder={'e.g., **********'} />
                 <Button onClick={loginButtonClicked} disabled={buttonDisabled}>Login</Button>
             </LoginForm>
             <Margin />
             <Copyright />
         </Container>
+    }
+
+    enterKeyPressed = (e) => {
+        const { loginUser } = this.props;
+        const { email, password } = this.state;
+        const key = e.key;
+        if (key === 'Enter') {
+            loginUser(email, password)
+        }
     }
 
     loginButtonClicked = () => {

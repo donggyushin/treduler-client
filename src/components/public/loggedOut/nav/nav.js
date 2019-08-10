@@ -81,18 +81,23 @@ const LoginAndSignUpButtonContainer = styled.div`
     margin-right:15px;
 `
 
+const A = styled.a`
+    text-decoration:none;
+`
 
 
 const Nav = () => (
     <Row>
-        <TredulerTextAndImageContainer>
-            <TredulerIconContainer>
-                <TredulerIcon src={require('../../../../assets/images/treduler.png')} />
-            </TredulerIconContainer>
-            <TredulerText>
-                Treduler
+        <A href={'/'}>
+            <TredulerTextAndImageContainer>
+                <TredulerIconContainer>
+                    <TredulerIcon src={require('../../../../assets/images/treduler.png')} />
+                </TredulerIconContainer>
+                <TredulerText>
+                    Treduler
                     </TredulerText>
-        </TredulerTextAndImageContainer>
+            </TredulerTextAndImageContainer>
+        </A>
         <LoginAndSignUpButtonContainer>
             <a href="/login">
                 <LoginButton>Login</LoginButton>

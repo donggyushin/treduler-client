@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Copyright from '../../global/copyright'
 import axios from 'axios'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
     display:flex;
@@ -65,6 +66,11 @@ class SignUp extends React.Component {
         const { handleInput, createNewAccountButtonTapped } = this;
         return (
             <Container>
+                <Helmet>
+                    <title>
+                        New Account | Treduler
+                    </title>
+                </Helmet>
                 <Card>
                     <BigText>
                         Create a Trello Account

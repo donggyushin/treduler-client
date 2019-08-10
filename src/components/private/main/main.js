@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Navigation from './nav'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../../actions/user'
+import Body from './body';
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
     display:flex;
@@ -22,7 +24,13 @@ class Main extends React.Component {
     render() {
         return (
             <Container>
+                <Helmet>
+                    <title>
+                        Boards | Treduler
+                    </title>
+                </Helmet>
                 <Navigation />
+                <Body />
             </Container>
         )
     }

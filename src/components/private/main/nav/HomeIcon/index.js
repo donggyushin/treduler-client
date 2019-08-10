@@ -5,7 +5,8 @@ function HomeIcon() {
         <a href={'/'}>
 
             <i style={{
-                color: 'white'
+                color: 'white',
+
             }} className="fas fa-home"></i>
         </a>
     )

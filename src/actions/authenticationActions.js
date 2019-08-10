@@ -3,12 +3,16 @@ import { LOGIN_USER, LOGOUT_USER, REMOVE_USER_INFO } from './type';
 
 export const logoutUser = () => dispatch => {
 
+    window.location.href = "/loggedOut"
+
     dispatch({
         type: LOGOUT_USER
     })
     dispatch({
         type: REMOVE_USER_INFO
     })
+
+
 }
 
 export const loginUser = (email, password) => dispatch => {
