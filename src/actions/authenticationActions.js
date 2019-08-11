@@ -23,11 +23,11 @@ export const loginUser = (email, password) => dispatch => {
         .then(res => res.data)
         .then(data => {
             if (data.ok) {
+                window.location.href = "/";
                 dispatch({
                     type: LOGIN_USER,
                     token: data.token
                 })
-                window.location.href = "/"
                 return;
             } else {
                 window.localStorage.setItem('email', email)

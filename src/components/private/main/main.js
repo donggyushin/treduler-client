@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Navigation from './nav'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../../actions/user'
+import { fetchAllBoards } from '../../../actions/board'
 import Body from './body';
 import { Helmet } from 'react-helmet'
 
@@ -17,8 +18,9 @@ const Container = styled.div`
 class Main extends React.Component {
 
     componentDidMount() {
-        const { getUserInfo } = this.props;
+        const { getUserInfo, fetchAllBoards } = this.props;
         getUserInfo()
+        fetchAllBoards()
     }
 
     render() {
@@ -40,4 +42,4 @@ const mapStateToProps = state => {
     return {}
 }
 
-export default connect(mapStateToProps, { getUserInfo })(Main) 
+export default connect(mapStateToProps, { getUserInfo, fetchAllBoards })(Main) 

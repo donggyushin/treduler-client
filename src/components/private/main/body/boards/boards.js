@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import Title from './title';
+import CreateNewBoardUI from './createNewBoardUI';
 
 const Container = styled.div`
     display:flex;
     flex-direction:column;
     width:800px;
+    overflow-y:scroll;
 `
 
 const BoardsContainer = styled.div`
@@ -42,13 +44,31 @@ const CreateNewBoard = styled.div`
 
 
 class Boards extends React.Component {
+    state = {
+        createNewBoardUIVisible: false
+    }
     render() {
+        const { createNewBoardUIVisible } = this.state;
+        const { makeCreateNewBoardUIVisible, makeCreateNewBoardUIInvisible } = this;
         return <Container>
             <Title icon={'far fa-user'} text={'Personal Boards'} />
             <BoardsContainer>
-                <CreateNewBoard>Create new board</CreateNewBoard>
+                <CreateNewBoard onClick={makeCreateNewBoardUIVisible}>Create new board</CreateNewBoard>
             </BoardsContainer>
+            {createNewBoardUIVisible && <CreateNewBoardUI makeCreateNewBoardUIInvisible={makeCreateNewBoardUIInvisible} />}
+
         </Container>
+    }
+
+    makeCreateNewBoardUIVisible = () => {
+        this.setState({
+            createNewBoardUIVisible: true
+        })
+    }
+    makeCreateNewBoardUIInvisible = () => {
+        this.setState({
+            createNewBoardUIVisible: false
+        })
     }
 }
 export default Boards

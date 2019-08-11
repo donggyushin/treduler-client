@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_USER_INFO, REMOVE_USER_INFO } from './type';
+import { SET_USER_INFO } from './type';
 
 
 
