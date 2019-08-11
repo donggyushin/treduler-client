@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PopUpStatusBar from './PopupStatusbar/popupStatusbar';
 import HomeIcon from './HomeIcon';
 import { connect } from 'react-redux'
+import { getUserInfo } from '../../../../actions/user'
 
 
 const NavigationContainer = styled.div`
@@ -76,6 +77,12 @@ class Navigation extends React.Component {
     state = {
         popupStatusBarVisible: false
     }
+
+    componentDidMount() {
+        const { getUserInfo } = this.props;
+        getUserInfo();
+    }
+
     render() {
         const { popupStatusBarVisible } = this.state;
         const { makePopunInvisible, makePopupVisible } = this;
@@ -121,4 +128,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {})(Navigation) 
+export default connect(mapStateToProps, { getUserInfo })(Navigation) 

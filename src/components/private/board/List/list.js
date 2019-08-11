@@ -47,12 +47,24 @@ const TitleContainer = styled.div`
 `
 
 const Delete = styled.div`
-    display:flex;
-    justify-content:flex-end;
-    opacity:0;
+        display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    align-items:flex-start;
+    justify-content: flex-end;
+    opacity: 0;
     width: 100%;
     padding-top: 5px;
+    position: absolute;
     padding-bottom: 5px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding-right: 8px;
     &:hover {
         opacity:1;
     }
@@ -64,6 +76,8 @@ const Text = styled.div`
 const AddNewCard = styled.div`
     margin-bottom: 7px;
     cursor: pointer;
+    z-index:2;
+    width:110px;
 `
 
 const Input = styled.textarea`
@@ -102,6 +116,7 @@ const SaveButton = styled.button`
     font-weight: 800;
     margin-right: 14px;
     cursor: pointer;
+    z-index:2;
 `
 
 const XButton = styled.button`
@@ -109,6 +124,7 @@ const XButton = styled.button`
     background: transparent;
     font-size: 18px;
     cursor: pointer;
+    z-index:2;
 `
 
 
