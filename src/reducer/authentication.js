@@ -11,7 +11,6 @@ export default function (state = initialState, action) {
 
         case LOGOUT_USER:
             return logoutUser(state, action)
-
         default:
             return state;
     }

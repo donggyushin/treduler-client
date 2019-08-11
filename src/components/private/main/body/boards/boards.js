@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import Title from './title';
 import CreateNewBoardUI from './createNewBoardUI';
+import { connect } from 'react-redux'
+import Board from './board';
 
 const Container = styled.div`
     display:flex;
     flex-direction:column;
-    width:800px;
+    width:810px;
     overflow-y:scroll;
 `
 
@@ -14,6 +16,7 @@ const BoardsContainer = styled.div`
     display:flex;
     width:100%;
     padding-top:15px;
+    flex-wrap: wrap;
 `
 
 const CreateNewBoard = styled.div`
@@ -50,9 +53,11 @@ class Boards extends React.Component {
     render() {
         const { createNewBoardUIVisible } = this.state;
         const { makeCreateNewBoardUIVisible, makeCreateNewBoardUIInvisible } = this;
+        const { boards } = this.props;
         return <Container>
             <Title icon={'far fa-user'} text={'Personal Boards'} />
             <BoardsContainer>
+                {boards.map(board => <Board board={board} key={board.id} />)}
                 <CreateNewBoard onClick={makeCreateNewBoardUIVisible}>Create new board</CreateNewBoard>
             </BoardsContainer>
             {createNewBoardUIVisible && <CreateNewBoardUI makeCreateNewBoardUIInvisible={makeCreateNewBoardUIInvisible} />}
@@ -71,4 +76,11 @@ class Boards extends React.Component {
         })
     }
 }
-export default Boards
+
+const mapStateToProps = state => {
+    return {
+        boards: state.board.boards
+    }
+}
+
+export default connect(mapStateToProps, {})(Boards) 

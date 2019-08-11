@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { LOGIN_USER, LOGOUT_USER, REMOVE_USER_INFO } from './type';
 
+
 export const logoutUser = () => dispatch => {
 
     window.location.href = "/loggedOut"

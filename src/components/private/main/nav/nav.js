@@ -9,8 +9,7 @@ const NavigationContainer = styled.div`
     width:100%;
     display:flex;
     justify-content:space-between;
-    
-    background:#026aa7;
+background:${props => props.board ? 'rgba(0,0,0,.35)' : '#026aa7'};
     color:white;
     align-items:center;
     position:fixed;
@@ -81,8 +80,9 @@ class Navigation extends React.Component {
         const { popupStatusBarVisible } = this.state;
         const { makePopunInvisible, makePopupVisible } = this;
         const { email, name, profilePhoto } = this.props.user;
+        const { board } = this.props;
         return (
-            <NavigationContainer>
+            <NavigationContainer board={board}>
                 <LeftContainer>
                     <HomeIconContainer>
                         <HomeIcon />

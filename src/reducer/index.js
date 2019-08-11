@@ -3,13 +3,15 @@ import thunk from 'redux-thunk';
 import authentication from "./authentication"
 import user from './user'
 import board from './board'
+import list from './list'
 
 const initialState = {};
 
 const allReducers = combineReducers({
     authentication,
     user,
-    board
+    board,
+    list
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

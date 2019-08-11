@@ -1,7 +1,8 @@
-import { MAKE_NEW_BOARD, FETCH_ALL_BOARDS } from "../actions/type";
+import { MAKE_NEW_BOARD, FETCH_ALL_BOARDS, FETCH_A_BOARD } from "../actions/type";
 
 const initialState = {
-    boards: []
+    boards: [],
+    board: {}
 }
 
 export default function (state = initialState, action) {
@@ -10,8 +11,17 @@ export default function (state = initialState, action) {
             return makeNewBoard(state, action)
         case FETCH_ALL_BOARDS:
             return fetchAllBoards(state, action)
+        case FETCH_A_BOARD:
+            return fetchABoard(state, action)
         default:
             return state;
+    }
+}
+
+const fetchABoard = (state, action) => {
+    return {
+        ...state,
+        board: action.payload
     }
 }
 

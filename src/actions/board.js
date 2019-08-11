@@ -1,5 +1,20 @@
 import Axios from "axios";
-import { MAKE_NEW_BOARD, FETCH_ALL_BOARDS } from "./type";
+import { MAKE_NEW_BOARD, FETCH_ALL_BOARDS, FETCH_A_BOARD } from "./type";
+
+export const fetABoard = (id) => dispatch => {
+    Axios.get(`/api/board/${id}`)
+        .then(res => res.data)
+        .then(data => {
+            if (data.ok) {
+                dispatch({
+                    type: FETCH_A_BOARD,
+                    payload: data.board
+                })
+            } else {
+                alert(data.message)
+            }
+        })
+}
 
 export const fetchAllBoards = () => dispatch => {
     Axios.get('/api/board/', {
