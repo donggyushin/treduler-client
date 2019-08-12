@@ -8,6 +8,7 @@ import Title from './Title';
 import List from './List';
 import AddNewList from './AddNewList';
 import AddNewListForm from './AddNewListForm';
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
     width:100%;
@@ -74,6 +75,12 @@ class Board extends React.Component {
         const { loading, addNewList } = this.state;
         const { toggleAddNewList } = this;
         return <Container>
+            <Helmet>
+                <title>
+                    {board.title ? `${board.title} | Treduler` : `Treduler`}
+
+                </title>
+            </Helmet>
             <BackgroundImageContainer>
                 {loading === false && <BackgroundImage src={require(`../../../assets/boardBackground/${board.backgroundImage}.png`)} />}
             </BackgroundImageContainer>
