@@ -18,3 +18,5 @@ export const FETCH_A_BOARD = 'FETCH_A_BOARD'
 // List
 
 export const FETCH_ALL_LIST_WITH_CARDS = 'FETCH_ALL_LIST_WITH_CARDS'
+export const CREATE_NEW_LIST = 'CREATE_NEW_LIST'
+export const DELETE_LIST = 'DELETE_LIST'

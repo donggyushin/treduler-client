@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux'
+import { DeleteList } from '../../../../actions/list'
 
 const ListContainer = styled.div`
     display: -webkit-box;
@@ -9,7 +11,7 @@ const ListContainer = styled.div`
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 272px;
+    min-width: 272px;
     background: #dfe1e6;
     border-radius: 4px;
     margin-right: 9px;
@@ -20,8 +22,7 @@ const ListContainer = styled.div`
 
 const Title = styled.div`
         color: #172b4d;
-    font-size: 17px;
-    font-weight: 600;
+    font-size: 15px;
     margin-bottom: 6px;
     margin-top: 4px;
 `
@@ -78,6 +79,15 @@ const AddNewCard = styled.div`
     cursor: pointer;
     z-index:2;
     width:110px;
+    margin-bottom: 7px;
+    cursor: pointer;
+    z-index: 2;
+    width: 110px;
+    padding: 4px;
+    border-radius: 4px;
+    &:hover {
+        background:rgba(0,0,0,.12);
+    }
 `
 
 const Input = styled.textarea`
@@ -90,6 +100,7 @@ const Input = styled.textarea`
     resize:none;
     color: #172b4d;
 font-size: 16px;
+z-index:3;
     &:focus {
         outline: none;
     }
@@ -135,17 +146,17 @@ class List extends React.Component {
     render() {
         const { list } = this.props;
         const { inputMode } = this.state;
-        const { turnOnInputMode, turnDownInputMode } = this;
+        const { turnOnInputMode, turnDownInputMode, deleteButtonClicked } = this;
         return <ListContainer>
             <TitleContainer>
                 <Title>
                     {list.title}
                 </Title>
                 <Delete>
-                    <Text>Delete</Text>
+                    <Text onClick={() => deleteButtonClicked(list.id)}>Delete</Text>
                 </Delete>
             </TitleContainer>
-            {list.cards.map(card => <Card key={card.id}>{card.title}</Card>)}
+            {list.cards && list.cards.map(card => <Card key={card.id}>{card.title}</Card>)}
             {inputMode ? <InputContainer>
                 <Input autoFocus={true} />
                 <ButtonContainer>
@@ -156,6 +167,17 @@ class List extends React.Component {
 
         </ListContainer>
     }
+
+    deleteButtonClicked = (listId) => {
+        const { DeleteList } = this.props;
+        if (window.confirm('Are you sure you want to delete this list')) {
+            DeleteList(listId)
+        } else {
+            return;
+        }
+
+    }
+
     turnOnInputMode = () => {
         this.setState({
             inputMode: true
@@ -168,4 +190,9 @@ class List extends React.Component {
     }
 }
 
-export default List;
+const mapStateToProps = state => {
+    return {}
+}
+
+
+export default connect(mapStateToProps, { DeleteList })(List);

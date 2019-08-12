@@ -6,6 +6,8 @@ import { fetABoard } from '../../../actions/board'
 import { fetAllListsWithCards } from '../../../actions/list'
 import Title from './Title';
 import List from './List';
+import AddNewList from './AddNewList';
+import AddNewListForm from './AddNewListForm';
 
 const Container = styled.div`
     width:100%;
@@ -41,12 +43,14 @@ const ListsContainer = styled.div`
     padding-top: 10px;
     padding-left: 15px;
     align-items:flex-start;
+    height:88vh;
 `
 
 class Board extends React.Component {
 
     state = {
-        loading: true
+        loading: true,
+        addNewList: false
     }
 
     componentDidMount() {
@@ -67,7 +71,8 @@ class Board extends React.Component {
 
     render() {
         const { board, lists } = this.props;
-        const { loading } = this.state;
+        const { loading, addNewList } = this.state;
+        const { toggleAddNewList } = this;
         return <Container>
             <BackgroundImageContainer>
                 {loading === false && <BackgroundImage src={require(`../../../assets/boardBackground/${board.backgroundImage}.png`)} />}
@@ -77,8 +82,17 @@ class Board extends React.Component {
             <Title text={board.title} />
             <ListsContainer>
                 {lists.map(list => <List key={list.id} list={list} />)}
+                {addNewList ? <AddNewListForm toggleAddNewList={toggleAddNewList} /> : <AddNewList toggleAddNewList={toggleAddNewList} />}
+
             </ListsContainer>
         </Container>
+    }
+
+    toggleAddNewList = () => {
+        const { addNewList } = this.state;
+        this.setState({
+            addNewList: !addNewList
+        })
     }
 }
 
