@@ -5,6 +5,7 @@ const Container = styled.div`
         width: 100%;
     background: rgba(0,0,0,.35);
     padding-left: 34px;
+    padding-right:34px;
     padding-top: 10px;
     padding-bottom: 6px;
     display: -webkit-box;
@@ -20,9 +21,25 @@ const Container = styled.div`
     font-weight: 800;
 `
 
+const Row = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+`
+
+const Menu = styled.div`
+    color:rgba(255, 255, 255, 0.8);
+    font-size:14px;
+    cursor: pointer;
+`
+
 function Title({ text }) {
     return <Container>
-        {text}
+        <Row>
+            {text}
+            <Menu>Menu</Menu>
+        </Row>
     </Container>
 }
 

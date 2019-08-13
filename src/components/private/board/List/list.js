@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
 import { DeleteList } from '../../../../actions/list'
+import CreateNewCard from './Input'
 
 const ListContainer = styled.div`
     display: -webkit-box;
@@ -38,6 +39,8 @@ const Card = styled.div`
     padding-right: 7px;
     border-radius: 4px;
     font-size: 16px;
+    cursor: pointer;
+    z-index:3;
 `
 
 const TitleContainer = styled.div`
@@ -90,53 +93,6 @@ const AddNewCard = styled.div`
     }
 `
 
-const Input = styled.textarea`
-    width: 95%;
-    border: 0;
-    margin-bottom: 7px;
-    min-height: 55px;
-    border-radius: 4px;
-    padding:10px;
-    resize:none;
-    color: #172b4d;
-font-size: 16px;
-z-index:3;
-    &:focus {
-        outline: none;
-    }
-`
-
-const InputContainer = styled.div`
-    display:flex;
-    flex-direction:column;
-`
-const ButtonContainer = styled.div`
-    display:flex;
-    align-items:center;
-    margin-bottom:13px;
-`
-
-const SaveButton = styled.button`
-        border: 0;
-    color: white;
-    background: #27ae60;
-    border-radius: 4px;
-    font-size: 16px;
-    padding-left: 17px;
-    padding-right: 17px;
-    font-weight: 800;
-    margin-right: 14px;
-    cursor: pointer;
-    z-index:2;
-`
-
-const XButton = styled.button`
-    border: 0;
-    background: transparent;
-    font-size: 18px;
-    cursor: pointer;
-    z-index:2;
-`
 
 
 class List extends React.Component {
@@ -157,13 +113,7 @@ class List extends React.Component {
                 </Delete>
             </TitleContainer>
             {list.cards && list.cards.map(card => <Card key={card.id}>{card.title}</Card>)}
-            {inputMode ? <InputContainer>
-                <Input autoFocus={true} />
-                <ButtonContainer>
-                    <SaveButton>Save</SaveButton>
-                    <XButton onClick={turnDownInputMode}>X</XButton>
-                </ButtonContainer>
-            </InputContainer> : <AddNewCard onClick={turnOnInputMode}>+ Add new card</AddNewCard>}
+            {inputMode ? <CreateNewCard listId={list.id} turnDownInputMode={turnDownInputMode} /> : <AddNewCard onClick={turnOnInputMode}>+ Add new card</AddNewCard>}
 
         </ListContainer>
     }
