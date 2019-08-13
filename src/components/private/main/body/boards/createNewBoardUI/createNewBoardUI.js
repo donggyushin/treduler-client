@@ -124,7 +124,7 @@ class CreateNewBoardUI extends React.Component {
         }
     }
     render() {
-        const { handleInput, CreateButtonClicked } = this;
+        const { handleInput, CreateButtonClicked, enterKeyPressed } = this;
         const { title, buttonDisabled, backgroundImage, loading } = this.state;
         return <Container>
             <Form ref={this.setWrapperRef}>
@@ -133,11 +133,18 @@ class CreateNewBoardUI extends React.Component {
                         {loading === false && <BackgroundImage src={require(`../../../../../../assets/boardBackground/${backgroundImage}.png`)} />}
 
                     </BackgroundImageContainer>
-                    <TitleInput value={title} onChange={handleInput} name={'title'} placeholder={'Add board title'} />
+                    <TitleInput onKeyPress={enterKeyPressed} value={title} onChange={handleInput} name={'title'} placeholder={'Add board title'} />
                 </Card>
                 <Button disabled={buttonDisabled} onClick={CreateButtonClicked} >Create</Button>
             </Form>
         </Container>
+    }
+
+    enterKeyPressed = e => {
+        const { key } = e;
+        if (key === 'Enter') {
+            this.CreateButtonClicked()
+        }
     }
 
     CreateButtonClicked = () => {
