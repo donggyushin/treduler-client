@@ -24,18 +24,32 @@ const createNewCard = (state, action) => {
     state.lists.map(list => {
         if (list.id === action.payload.listId) {
             const newCard = action.payload
-            const updatedList = {
-                ...list,
-                cards: [
-                    ...list.cards,
-                    { ...newCard }
-                ]
+            if (list.cards) {
+                const updatedList = {
+                    ...list,
+                    cards: [
+                        ...list.cards,
+                        newCard
+                    ]
+                }
+                console.log('updated list: ', updatedList)
+                newLists.push(updatedList)
+            } else {
+                const updatedList = {
+                    ...list,
+                    cards: [
+                        newCard
+                    ]
+                }
+                console.log('updated list: ', updatedList)
+                newLists.push(updatedList)
             }
-            newLists.push(updatedList)
+
         } else {
             newLists.push(list)
         }
     })
+    console.log('new lists: ', newLists)
     return {
         ...state,
         lists: newLists

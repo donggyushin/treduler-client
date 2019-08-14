@@ -34,12 +34,12 @@ const Container = styled.div`
     flex-direction:column;
     border-top-left-radius:2px;
     border-bottom-left-radius:2px;
-    ${props => props.action && css`
+    ${props => props.type && css`
         animation: ${MoveBoxToRight} 0.7s;
     `};
     padding-right:7px;
     padding-left:7px;
-    
+    z-index:3;
 `
 
 const TitleContainer = styled.div`
@@ -88,6 +88,7 @@ class Menu extends React.Component {
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
+
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
     }
@@ -115,8 +116,8 @@ class Menu extends React.Component {
 
 
     render() {
-        const { turnDownMenu, action } = this.props;
-        return <Container ref={this.setWrapperRef} action={action}>
+        const { turnDownMenu, type } = this.props;
+        return <Container ref={this.setWrapperRef} type={type}>
             <TitleContainer>
                 <Title>
                     Menu
@@ -126,7 +127,7 @@ class Menu extends React.Component {
             <DividerContainer>
                 <Divider />
             </DividerContainer>
-            <MenuItem icon={'fas fa-trash-alt'} text={'Delete this board'} />
+            <MenuItem icon={'fas fa-trash-alt'} type={"delete"} text={'Delete this board'} />
         </Container>
     }
 }

@@ -58,7 +58,7 @@ class Title extends React.Component {
                 <Row>
                     {text}
                     <Menu onClick={turnOnMenu}>Show menu</Menu>
-                    {menuVisible && <MenuComponent action={action} turnDownMenu={turnDownMenu} />}
+                    {menuVisible && <MenuComponent type={action} turnDownMenu={turnDownMenu} />}
                 </Row>
             </Container>
         )

@@ -1,4 +1,4 @@
-import { MAKE_NEW_BOARD, FETCH_ALL_BOARDS, FETCH_A_BOARD } from "../actions/type";
+import { MAKE_NEW_BOARD, FETCH_ALL_BOARDS, FETCH_A_BOARD, DELETE_BOARD } from "../actions/type";
 
 const initialState = {
     boards: [],
@@ -13,8 +13,18 @@ export default function (state = initialState, action) {
             return fetchAllBoards(state, action)
         case FETCH_A_BOARD:
             return fetchABoard(state, action)
+        case DELETE_BOARD:
+            return deleteBoard(state, action)
         default:
             return state;
+    }
+}
+
+const deleteBoard = (state, action) => {
+    const newBoards = state.boards.filter(board => board.id !== action.payload)
+    return {
+        ...state,
+        boards: newBoards
     }
 }
 

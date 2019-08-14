@@ -40,7 +40,7 @@ const Card = styled.div`
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    z-index:3;
+    z-index:1;
 `
 
 const TitleContainer = styled.div`

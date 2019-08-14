@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import DeleteAlertModal from './DeleteAlertModal';
 
 const Container = styled.div`
     display:flex;
@@ -25,13 +26,37 @@ const Text = styled.div`
 `
 
 class MenuItem extends React.Component {
+
+    state = {
+        alert: false
+    }
+
     render() {
-        const { icon, text } = this.props;
-        return <Container>
+        const { icon, text, type } = this.props;
+        const { alert } = this.state;
+        const { turnOn, turnDown } = this;
+        return <Container onClick={turnOn} >
             <Icon className={icon} />
-            <Text>{text}</Text>
+            <Text >{text}</Text>
+            {(alert === true && type === 'delete') && <DeleteAlertModal turnDown={turnDown} />}
         </Container>
     }
+
+    turnDown = () => {
+        this.setState({
+            alert: false
+        })
+    }
+
+    turnOn = () => {
+        if (this.state.alert === false) {
+            this.setState({
+                alert: true
+            })
+        }
+
+    }
+
 }
 
 export default MenuItem

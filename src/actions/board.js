@@ -1,5 +1,22 @@
 import Axios from "axios";
-import { MAKE_NEW_BOARD, FETCH_ALL_BOARDS, FETCH_A_BOARD } from "./type";
+import { MAKE_NEW_BOARD, FETCH_ALL_BOARDS, FETCH_A_BOARD, DELETE_BOARD } from "./type";
+
+export const deleteBoard = (id) => dispatch => {
+    Axios.delete(`/api/board/${id}`)
+        .then(res => res.data)
+        .then(data => {
+            if (data.ok) {
+                dispatch({
+                    type: DELETE_BOARD,
+                    payload: id
+                })
+                window.location.href = "/"
+            } else {
+                alert(data.message)
+            }
+        })
+        .catch(err => console.error(err))
+}
 
 export const fetABoard = (id) => dispatch => {
     Axios.get(`/api/board/${id}`)

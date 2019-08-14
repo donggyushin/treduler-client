@@ -14,6 +14,7 @@ export const REMOVE_USER_INFO = "REMOVE_USER_INFO"
 export const MAKE_NEW_BOARD = 'MAKE_NEW_BOARD'
 export const FETCH_ALL_BOARDS = 'FETCH_ALL_BOARDS'
 export const FETCH_A_BOARD = 'FETCH_A_BOARD'
+export const DELETE_BOARD = 'DELETE_BOARD'
 
 // List
 
