@@ -1,5 +1,21 @@
 import axios from 'axios';
-import { FETCH_ALL_LIST_WITH_CARDS, CREATE_NEW_LIST, DELETE_LIST, CREATE_NEW_CARD } from './type';
+import { FETCH_ALL_LIST_WITH_CARDS, CREATE_NEW_LIST, DELETE_LIST, CREATE_NEW_CARD, DELETE_CARD } from './type';
+
+export const DeleteCard = (cardId) => dispatch => {
+    axios.delete(`/api/card/${cardId}`)
+        .then(res => res.data)
+        .then(data => {
+            if (data.ok) {
+                dispatch({
+                    type: DELETE_CARD,
+                    payload: data.card
+                })
+            } else {
+                alert(data.message)
+            }
+        })
+        .catch(err => console.error(err))
+}
 
 export const CreateNewCard = (listId, title) => dispatch => {
     axios.post('/api/card/', {

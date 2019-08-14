@@ -25,7 +25,7 @@ const SaveButton = styled.button`
     font-weight: 800;
     margin-right: 14px;
     cursor: pointer;
-    z-index:2;
+    z-index:0;
 `
 
 const XButton = styled.button`
@@ -55,6 +55,38 @@ z-index:3;
 
 class CreateNewCard extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.setWrapperRef = this.setWrapperRef.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    /**
+     * Set the wrapper ref
+     */
+    setWrapperRef(node) {
+        this.wrapperRef = node;
+    }
+
+    /**
+     * Alert if clicked on outside of element
+     */
+    handleClickOutside(event) {
+        if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+            const { turnDownInputMode } = this.props;
+            turnDownInputMode()
+        }
+    }
+
     state = {
         title: ""
     }
@@ -64,7 +96,7 @@ class CreateNewCard extends React.Component {
         const { title } = this.state;
         const { handleInput, saveButtonClicked, enterKeyPressed } = this;
         return (
-            <InputContainer>
+            <InputContainer ref={this.setWrapperRef}>
                 <Input onKeyPress={enterKeyPressed} name={'title'} onChange={handleInput} value={title} autoFocus={true} />
                 <ButtonContainer>
                     <SaveButton onClick={saveButtonClicked}>Save</SaveButton>

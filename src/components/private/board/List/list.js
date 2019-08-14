@@ -1,8 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { connect } from 'react-redux'
-import { DeleteList } from '../../../../actions/list'
+import { DeleteList, DeleteCard } from '../../../../actions/list'
 import CreateNewCard from './Input'
+import Card from './Card';
 
 const ListContainer = styled.div`
     display: -webkit-box;
@@ -28,20 +29,8 @@ const Title = styled.div`
     margin-top: 4px;
 `
 
-const Card = styled.div`
-    background: white;
-    color: #172b4d;
-    width: 95%;
-    margin-bottom: 10px;
-    padding-left: 7px;
-    padding-top: 3px;
-    padding-bottom: 36px;
-    padding-right: 7px;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    z-index:1;
-`
+
+
 
 const TitleContainer = styled.div`
     display:flex;
@@ -80,11 +69,10 @@ const Text = styled.div`
 const AddNewCard = styled.div`
     margin-bottom: 7px;
     cursor: pointer;
-    z-index:2;
+    z-index:0;
     width:110px;
     margin-bottom: 7px;
     cursor: pointer;
-    z-index: 2;
     width: 110px;
     padding: 4px;
     border-radius: 4px;
@@ -102,7 +90,7 @@ class List extends React.Component {
     render() {
         const { list } = this.props;
         const { inputMode } = this.state;
-        const { turnOnInputMode, turnDownInputMode, deleteButtonClicked } = this;
+        const { turnOnInputMode, turnDownInputMode, deleteButtonClicked, deleteCard } = this;
         return <ListContainer>
             <TitleContainer>
                 <Title>
@@ -112,10 +100,20 @@ class List extends React.Component {
                     <Text onClick={() => deleteButtonClicked(list.id)}>Delete</Text>
                 </Delete>
             </TitleContainer>
-            {list.cards && list.cards.map(card => <Card key={card.id}>{card.title}</Card>)}
+            {list.cards && list.cards.map(card => <Card key={card.id} card={card} deleteCard={deleteCard} />)}
             {inputMode ? <CreateNewCard listId={list.id} turnDownInputMode={turnDownInputMode} /> : <AddNewCard onClick={turnOnInputMode}>+ Add new card</AddNewCard>}
 
         </ListContainer>
+    }
+
+    deleteCard = (cardId) => {
+        const { DeleteCard } = this.props;
+        if (window.confirm('Are you sure you want to delete this card?')) {
+            DeleteCard(cardId)
+        } else {
+            // Do nothing!
+        }
+
     }
 
     deleteButtonClicked = (listId) => {
@@ -145,4 +143,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, { DeleteList })(List);
+export default connect(mapStateToProps, { DeleteList, DeleteCard })(List);
