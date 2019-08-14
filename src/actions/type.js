@@ -23,3 +23,9 @@ export const CREATE_NEW_LIST = 'CREATE_NEW_LIST'
 export const DELETE_LIST = 'DELETE_LIST'
 export const CREATE_NEW_CARD = 'CREATE_NEW_CARD'
 export const DELETE_CARD = 'DELETE_CARD'
+
+
+// Card
+
+export const FETCH_CARD = 'FETCH_CARD'
+export const PUT_DESC = 'PUT_DESC'

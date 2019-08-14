@@ -52,6 +52,7 @@ const CreateNewAccountButton = styled.button`
     font-weight: bold;
     color:${props => props.disabled ? `rgb(140, 140, 140)` : `white`};
     font-size:23px;
+    cursor: pointer;
 `
 
 class SignUp extends React.Component {

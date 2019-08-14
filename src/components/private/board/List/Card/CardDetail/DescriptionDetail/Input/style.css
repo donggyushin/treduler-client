@@ -1,0 +1,15 @@
+.textareaautosize {
+    overflow: hidden;
+    overflow-wrap: break-word;
+    resize: none;
+    min-height: 108px;
+    background: #fff;
+    border: none;
+    box-shadow: inset 0 0 0 2px #0079bf;
+    width: 561px;
+    margin-bottom: 13px;
+    padding-left:10px;
+    white-space: pre-wrap;
+    outline:none;
+}
+

@@ -100,7 +100,7 @@ class List extends React.Component {
                     <Text onClick={() => deleteButtonClicked(list.id)}>Delete</Text>
                 </Delete>
             </TitleContainer>
-            {list.cards && list.cards.map(card => <Card key={card.id} card={card} deleteCard={deleteCard} />)}
+            {list.cards && list.cards.map(card => <Card key={card.id} list={list} card={card} deleteCard={deleteCard} />)}
             {inputMode ? <CreateNewCard listId={list.id} turnDownInputMode={turnDownInputMode} /> : <AddNewCard onClick={turnOnInputMode}>+ Add new card</AddNewCard>}
 
         </ListContainer>

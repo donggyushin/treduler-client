@@ -49,7 +49,7 @@ class CardComponent extends React.Component {
         cardDetail: false
     }
     render() {
-        const { deleteCard, card } = this.props;
+        const { deleteCard, card, list } = this.props;
         const { cardDetail } = this.state;
         const { turnCardDetailDown, turnCardDetailOn } = this;
         return (
@@ -58,7 +58,7 @@ class CardComponent extends React.Component {
                     <XButtonForCard onClick={() => deleteCard(card.id)}>X</XButtonForCard>
                 </CardBackground>
                 {card.title}
-                {cardDetail && <CardDetail turnCardDetailDown={turnCardDetailDown} />}
+                {cardDetail && <CardDetail list={list} cardId={card.id} turnCardDetailDown={turnCardDetailDown} />}
             </Card>
         )
     }
