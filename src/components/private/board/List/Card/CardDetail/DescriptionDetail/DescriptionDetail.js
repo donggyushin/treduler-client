@@ -9,14 +9,16 @@ const Container = styled.div`
 `
 
 const Card = styled.div`
-        width: 561px;
+        width: 519px;
     padding: 7px;
     border-radius: 4px;
     min-height: 70px;
     background-color: rgba(0,0,0,0.03);
-    padding-left:15px;
+    padding-left: 15px;
     cursor: pointer;
     white-space: pre-line;
+    margin-left: 34px;
+
     &:hover {
         background-color: rgba(0,0,0,0.08);
     }

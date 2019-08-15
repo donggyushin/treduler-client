@@ -1,37 +1,50 @@
 import React from 'react';
 import styled from 'styled-components';
-import TextareaAutosize from 'react-autosize-textarea';
 import { connect } from 'react-redux'
-import { putDesc } from '../../../../../../../../actions/card'
-import './style.css'
+import { postCheckList } from '../../../../../../../../../actions/card'
 
 const Container = styled.div`
     display:flex;
     flex-direction:column;
 `
 
-
-const SaveButton = styled.button`
-        background: #27ae60;
+const Input = styled.input`
+        box-shadow: inset 0 0 0 2px #0079bf;
     border: 0;
-    border-radius: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    height: 50px;
+    outline:none;
+    margin-top:26px;
+`
+
+const Row = styled.div`
+    display:flex;
+    align-items:center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+`
+
+const SaveButton = styled.div`
+        background: #27ae60;
     color: white;
     font-weight: 800;
-    margin-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 4px;
+    margin-right: 27px;
     cursor: pointer;
 `
+
 const XButton = styled.div`
     cursor: pointer;
 `
-const Row = styled.div`
-    display:flex;
-    margin-left: 38px;
-`
-
-const TextAreaContainer = styled.div``
 
 class InputComponent extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -41,10 +54,6 @@ class InputComponent extends React.Component {
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
-        const { desc } = this.props;
-        this.setState({
-            desc
-        })
     }
 
     componentWillUnmount() {
@@ -63,30 +72,21 @@ class InputComponent extends React.Component {
      */
     handleClickOutside(event) {
         if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-            //   alert('You clicked outside of me!');
-            console.log('clicked outside')
             const { inputModeDown } = this.props;
             inputModeDown()
         }
     }
 
-
-
     state = {
-        desc: ""
+        content: ""
     }
 
-
-
     render() {
+        const { content } = this.state;
         const { inputModeDown } = this.props;
-        const { handleTextArea, saveButtonClicked } = this;
-        const { desc } = this.state;
+        const { handleInput, saveButtonClicked, enterKeyPressed } = this;
         return <Container ref={this.setWrapperRef}>
-
-            <TextareaAutosize autoFocus={true} name={'desc'} value={desc} onChange={handleTextArea} className={'textareaautosize'}
-            />
-
+            <Input autoFocus={true} onKeyPress={enterKeyPressed} onChange={handleInput} value={content} name={'content'} />
             <Row>
                 <SaveButton onClick={saveButtonClicked}>Save</SaveButton>
                 <XButton onClick={inputModeDown}>X</XButton>
@@ -94,25 +94,35 @@ class InputComponent extends React.Component {
         </Container>
     }
 
+    enterKeyPressed = e => {
+        const { saveButtonClicked } = this;
+        if (e.key === 'Enter') {
+            saveButtonClicked()
+        }
+    }
+
     saveButtonClicked = () => {
-        const { desc } = this.state;
-        const { putDesc, cardId, inputModeDown } = this.props;
-        putDesc(cardId, desc)
-        inputModeDown();
+        const { postCheckList, inputModeDown, card } = this.props;
+        const { content } = this.state;
+        if (this.state.content.length === 0) {
+            alert('Too short content')
+            return
+        }
+        postCheckList(card.id, content)
+        inputModeDown()
     }
 
-    handleTextArea = e => {
+    handleInput = (e) => {
         this.setState({
-            [e.target.name]: e.target.value,
-            convertedDesc: e.target.value
+            [e.target.name]: e.target.value
         })
-
     }
-
 }
 
 const mapStateToProps = state => {
-    return {}
+    return {
+        card: state.card.card
+    }
 }
 
-export default connect(mapStateToProps, { putDesc })(InputComponent)
+export default connect(mapStateToProps, { postCheckList })(InputComponent)

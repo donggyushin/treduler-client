@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux'
 import { fetchCard } from '../../../../../../actions/card'
 import DescDetail from './DescriptionDetail';
+import CheckList from './Checklists';
 
 const Container = styled.div`
     position:fixed;
@@ -37,6 +38,14 @@ const TitleContainer = styled.div`
     position: relative;
 `
 const DescContainer = styled.div`
+    display:flex;
+    align-items:center;
+    position: relative;
+    margin-top:40px;
+    margin-bottom:15px;
+`
+
+const CheckListContainer = styled.div`
     display:flex;
     align-items:center;
     position: relative;
@@ -119,10 +128,15 @@ class CardDetail extends React.Component {
                         <XButton onClick={turnCardDetailDown}>X</XButton>
                     </TitleContainer>
                     <DescContainer>
-                        <TitleIcon className={'fas fa-list'} />
+                        <TitleIcon className={'fas fa-newspaper'} />
                         <Title>Description</Title>
                     </DescContainer>
                     <DescDetail />
+                    <CheckListContainer>
+                        <TitleIcon className={'fas fa-list'} />
+                        <Title>Checklists</Title>
+                    </CheckListContainer>
+                    <CheckList checklists={card.checklists} />
                 </Card>
             </Container>
         )
