@@ -85,12 +85,13 @@ const AddNewCard = styled.div`
 
 class List extends React.Component {
     state = {
-        inputMode: false
+        inputMode: false,
+        cardDetail: false
     }
     render() {
         const { list } = this.props;
-        const { inputMode } = this.state;
-        const { turnOnInputMode, turnDownInputMode, deleteButtonClicked, deleteCard } = this;
+        const { inputMode, cardDetail } = this.state;
+        const { turnOnInputMode, turnDownInputMode, deleteButtonClicked, deleteCard, turnCardDetailDown } = this;
         return <ListContainer>
             <TitleContainer>
                 <Title>
@@ -104,6 +105,12 @@ class List extends React.Component {
             {inputMode ? <CreateNewCard listId={list.id} turnDownInputMode={turnDownInputMode} /> : <AddNewCard onClick={turnOnInputMode}>+ Add new card</AddNewCard>}
 
         </ListContainer>
+    }
+
+    turnCardDetailDown = () => {
+        this.setState({
+            cardDetail: false
+        })
     }
 
     deleteCard = (cardId) => {

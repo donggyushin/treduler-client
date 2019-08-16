@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import CardDetail from './CardDetail';
+import { fetchCard } from '../../../../../actions/card'
+import { connect } from 'react-redux'
 
 const Card = styled.div`
     background: white;
@@ -14,7 +15,7 @@ const Card = styled.div`
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    z-index:1;
+    z-index:0;
     box-shadow: 0 1px 0 rgba(9,30,66,.25);
     position:relative;
 `
@@ -45,38 +46,30 @@ const XButtonForCard = styled.div`
 `
 
 class CardComponent extends React.Component {
-    state = {
-        cardDetail: false
-    }
+
     render() {
         const { deleteCard, card, list } = this.props;
-        const { cardDetail } = this.state;
-        const { turnCardDetailDown, turnCardDetailOn } = this;
+        const { cardClicked } = this;
         return (
-            <Card onClick={turnCardDetailOn}>
+            <Card onClick={() => cardClicked(card.id)}>
                 <CardBackground >
                     <XButtonForCard onClick={() => deleteCard(card.id)}>X</XButtonForCard>
                 </CardBackground>
                 {card.title}
-                {cardDetail && <CardDetail list={list} cardId={card.id} turnCardDetailDown={turnCardDetailDown} />}
+
             </Card>
         )
     }
 
-    turnCardDetailDown = () => {
-        this.setState({
-            cardDetail: false
-        })
+    cardClicked = (cardId) => {
+        const { fetchCard } = this.props;
+        fetchCard(cardId)
     }
 
-    turnCardDetailOn = () => {
-        if (this.state.cardDetail === false) {
-
-            this.setState({
-                cardDetail: true
-            })
-        }
-    }
 }
 
-export default CardComponent
+const mapStateToProps = state => {
+    return {}
+}
+
+export default connect(mapStateToProps, { fetchCard })(CardComponent)

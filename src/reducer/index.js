@@ -5,6 +5,7 @@ import user from './user'
 import board from './board'
 import list from './list'
 import card from './card'
+import comment from './comment'
 
 const initialState = {};
 
@@ -13,7 +14,8 @@ const allReducers = combineReducers({
     user,
     board,
     list,
-    card
+    card,
+    comment
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

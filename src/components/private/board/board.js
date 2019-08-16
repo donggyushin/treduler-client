@@ -9,6 +9,7 @@ import List from './List';
 import AddNewList from './AddNewList';
 import AddNewListForm from './AddNewListForm';
 import { Helmet } from 'react-helmet'
+import CardDetail from './CardDetail';
 
 const Container = styled.div`
     width:100%;
@@ -71,7 +72,7 @@ class Board extends React.Component {
     }
 
     render() {
-        const { board, lists } = this.props;
+        const { board, lists, cardVisible } = this.props;
         const { loading, addNewList } = this.state;
         const { toggleAddNewList } = this;
         return <Container>
@@ -92,6 +93,7 @@ class Board extends React.Component {
                 {addNewList ? <AddNewListForm toggleAddNewList={toggleAddNewList} /> : <AddNewList toggleAddNewList={toggleAddNewList} />}
 
             </ListsContainer>
+            {cardVisible && <CardDetail />}
         </Container>
     }
 
@@ -106,7 +108,8 @@ class Board extends React.Component {
 const mapStateToProps = state => {
     return {
         board: state.board.board,
-        lists: state.list.lists
+        lists: state.list.lists,
+        cardVisible: state.card.visible
     }
 }
 
