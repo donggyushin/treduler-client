@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import Title from './Title';
 import { connect } from 'react-redux'
 import { shutDownCard } from '../../../../actions/card'
+import { fetchChecklists } from '../../../../actions/checklist'
 import Description from './Description';
+import Checklists from './Checklists';
 
 const Container = styled.div`
     position:absolute;
@@ -60,8 +62,9 @@ class CardDetail extends React.Component {
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
-        const { card } = this.props;
+        const { card, fetchChecklists } = this.props;
         if (card.id) {
+            fetchChecklists(card.id)
             this.setState({
                 loading: false
             })
@@ -109,6 +112,7 @@ class CardDetail extends React.Component {
                     <Description desc={card.description} />
                     <Margin />
                     <Title icon={'fas fa-check-square'} title={'Checklist'} />
+                    <Checklists />
                 </Card>
             }
 
@@ -127,4 +131,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { shutDownCard })(CardDetail) 
+export default connect(mapStateToProps, { shutDownCard, fetchChecklists })(CardDetail) 

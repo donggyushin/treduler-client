@@ -20,7 +20,6 @@ class Text extends React.Component {
         const { desc, inputModeOn } = this.props;
         return <Container onClick={inputModeOn}>
             {desc ? desc : 'Add more detailed description...'}
-            {(desc === null || desc === "") ? desc : 'Add more detailed description...'}
         </Container>
     }
 

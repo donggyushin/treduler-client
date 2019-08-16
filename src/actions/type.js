@@ -32,7 +32,8 @@ export const PUT_DESC = 'PUT_DESC'
 export const SHUT_DOWN_CARD = 'SHUT_DOWN_CARD'
 
 // CheckLists
-
+export const FETCH_CHECKLISTS = 'FETCH_CHECKLISTS'
+export const TOGGLE_CHECKLIST = 'TOGGLE_CHECKLIST'
 
 // Comment 
 
