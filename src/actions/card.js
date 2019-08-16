@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { FETCH_CARD, PUT_DESC, } from './type';
+import { FETCH_CARD, PUT_DESC, SHUT_DOWN_CARD, } from './type';
+
+export const shutDownCard = () => dispatch => {
+    dispatch({
+        type: SHUT_DOWN_CARD
+    })
+}
 
 
 

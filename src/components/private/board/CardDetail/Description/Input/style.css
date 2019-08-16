@@ -1,0 +1,17 @@
+.textarea {
+    resize: none;
+    min-height: 100px;
+    outline: none;
+    background: #fff;
+    border: none;
+    width: 532px;
+    padding: 7px;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    
+}
+
+.textarea:focus {
+    box-shadow: inset 0 0 0 2px #0079bf;
+}

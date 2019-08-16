@@ -29,7 +29,7 @@ export const DELETE_CARD = 'DELETE_CARD'
 
 export const FETCH_CARD = 'FETCH_CARD'
 export const PUT_DESC = 'PUT_DESC'
-
+export const SHUT_DOWN_CARD = 'SHUT_DOWN_CARD'
 
 // CheckLists
 

@@ -1,4 +1,4 @@
-import { FETCH_CARD, PUT_DESC } from "../actions/type";
+import { FETCH_CARD, PUT_DESC, SHUT_DOWN_CARD } from "../actions/type";
 
 const initialState = {
     visible: false,
@@ -11,11 +11,19 @@ export default function (state = initialState, action) {
             return fetchCard(state, action)
         case PUT_DESC:
             return putCard(state, action)
+        case SHUT_DOWN_CARD:
+            return shutdownCard(state, action)
         default:
             return state;
     }
 }
 
+const shutdownCard = (state, action) => {
+    return {
+        visible: false,
+        card: {}
+    }
+}
 
 const putCard = (state, action) => {
     return {
