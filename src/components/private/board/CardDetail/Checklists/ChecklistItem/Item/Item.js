@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Checkbox } from 'antd'
 import { connect } from 'react-redux'
-import { toggleChecklist } from '../../../../../../../actions/checklist'
+import { toggleChecklist, deleteChecklist } from '../../../../../../../actions/checklist'
 
 const Container = styled.div`
     display:flex;
@@ -34,14 +34,19 @@ const XButton = styled.div`
 class Item extends React.Component {
     render() {
         const { checklist, inputModeOn } = this.props;
-        const { checkboxClicked } = this;
+        const { checkboxClicked, deleteButtonClicked } = this;
         return (
             <Container >
                 <Checkbox onClick={() => checkboxClicked(checklist.id)} className={'checkbox'} checked={checklist.checked} />
                 <Text checked={checklist.checked} onClick={inputModeOn}>{checklist.content}</Text>
-                <XButton>X</XButton>
+                <XButton onClick={deleteButtonClicked}>X</XButton>
             </Container>
         )
+    }
+
+    deleteButtonClicked = () => {
+        const { deleteChecklist, checklist } = this.props;
+        deleteChecklist(checklist.id)
     }
 
     checkboxClicked = (checklistId) => {
@@ -54,4 +59,4 @@ const mapStateToProps = state => {
     return {}
 }
 
-export default connect(mapStateToProps, { toggleChecklist })(Item);
+export default connect(mapStateToProps, { toggleChecklist, deleteChecklist })(Item);

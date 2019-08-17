@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux'
+import { postNewChecklist } from '../../../../../../../actions/checklist'
 
 const Container = styled.div`
     width:532px;
@@ -73,16 +75,48 @@ class InputComponent extends React.Component {
             inputModeDown()
         }
     }
+
+    state = {
+        content: ""
+    }
+
     render() {
         const { inputModeDown } = this.props;
+        const { content } = this.state;
+        const { handleInput, saveButtonClicked, enterKeypressed } = this;
         return <Container ref={this.setWrapperRef}>
-            <Input autoFocus={true} />
+            <Input onKeyPress={enterKeypressed} onChange={handleInput} value={content} name={'content'} autoFocus={true} />
             <Row>
-                <SaveButton>Save</SaveButton>
+                <SaveButton onClick={saveButtonClicked}>Save</SaveButton>
                 <XButton onClick={inputModeDown}>X</XButton>
             </Row>
         </Container>
     }
+
+    enterKeypressed = (e) => {
+        if (e.key === 'Enter') {
+            this.saveButtonClicked()
+        }
+    }
+
+    saveButtonClicked = () => {
+        const { postNewChecklist, card, inputModeDown } = this.props;
+        const { content } = this.state;
+        postNewChecklist(card.id, content)
+        inputModeDown()
+    }
+
+    handleInput = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
 }
 
-export default InputComponent
+const mapStateToProps = state => {
+    return {
+        card: state.card.card
+    }
+}
+
+export default connect(mapStateToProps, { postNewChecklist })(InputComponent)

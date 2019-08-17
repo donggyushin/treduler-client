@@ -4,8 +4,10 @@ import Title from './Title';
 import { connect } from 'react-redux'
 import { shutDownCard } from '../../../../actions/card'
 import { fetchChecklists } from '../../../../actions/checklist'
+import { fetchComments } from '../../../../actions/comment'
 import Description from './Description';
 import Checklists from './Checklists';
+import Comments from './Comments';
 
 const Container = styled.div`
     position:absolute;
@@ -17,6 +19,7 @@ const Container = styled.div`
     display:flex;
     flex-direction:column;
     align-items:center;
+    
 `
 
 const Card = styled.div`
@@ -30,6 +33,7 @@ const Card = styled.div`
     display:flex;
     flex-direction:column;
     padding:24px;
+    overflow:auto;
 `
 
 const XButton = styled.div`
@@ -47,7 +51,7 @@ const GreyThinText = styled.div`
     color: rgba(0,0,0,0.5);
 `
 const Margin = styled.div`
-    height:20px;
+    margin-top:30px;
 `
 
 class CardDetail extends React.Component {
@@ -62,9 +66,10 @@ class CardDetail extends React.Component {
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
-        const { card, fetchChecklists } = this.props;
+        const { card, fetchChecklists, fetchComments } = this.props;
         if (card.id) {
             fetchChecklists(card.id)
+            fetchComments(card.id)
             this.setState({
                 loading: false
             })
@@ -113,6 +118,9 @@ class CardDetail extends React.Component {
                     <Margin />
                     <Title icon={'fas fa-check-square'} title={'Checklist'} />
                     <Checklists />
+                    <Margin />
+                    <Title icon={'fas fa-comment'} title={'Comments'} />
+                    <Comments />
                 </Card>
             }
 
@@ -131,4 +139,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { shutDownCard, fetchChecklists })(CardDetail) 
+export default connect(mapStateToProps, { shutDownCard, fetchChecklists, fetchComments })(CardDetail) 
