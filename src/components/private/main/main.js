@@ -6,6 +6,8 @@ import { getUserInfo } from '../../../actions/user'
 import { fetchAllBoards } from '../../../actions/board'
 import Body from './body';
 import { Helmet } from 'react-helmet'
+import ChangeProfile from './ChangeProfile';
+
 
 const Container = styled.div`
     display:flex;
@@ -17,6 +19,7 @@ const Container = styled.div`
 
 class Main extends React.Component {
 
+
     componentDidMount() {
         const { getUserInfo, fetchAllBoards } = this.props;
         getUserInfo()
@@ -24,6 +27,7 @@ class Main extends React.Component {
     }
 
     render() {
+        const { changeProfile } = this.props;
         return (
             <Container>
                 <Helmet>
@@ -33,13 +37,16 @@ class Main extends React.Component {
                 </Helmet>
                 <Navigation />
                 <Body />
+                {changeProfile && <ChangeProfile />}
             </Container>
         )
     }
 }
 
 const mapStateToProps = state => {
-    return {}
+    return {
+        changeProfile: state.changeProfile.changeProfile
+    }
 }
 
 export default connect(mapStateToProps, { getUserInfo, fetchAllBoards })(Main) 

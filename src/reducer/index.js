@@ -7,6 +7,7 @@ import list from './list'
 import card from './card'
 import comment from './comment'
 import checklist from './checklist'
+import changeProfile from './changeProfile'
 
 const initialState = {};
 
@@ -17,7 +18,8 @@ const allReducers = combineReducers({
     list,
     card,
     comment,
-    checklist
+    checklist,
+    changeProfile
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

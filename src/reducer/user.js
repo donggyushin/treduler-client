@@ -1,4 +1,4 @@
-import { SET_USER_INFO, REMOVE_USER_INFO } from "../actions/type";
+import { SET_USER_INFO, REMOVE_USER_INFO, CHANGE_PROFILE_PHOTO } from "../actions/type";
 
 const initialState = {
     name: "",
@@ -12,8 +12,17 @@ export default function (state = initialState, action) {
             return setUserInfo(state, action);
         case REMOVE_USER_INFO:
             return removeUserInfo(state, action)
+        case CHANGE_PROFILE_PHOTO:
+            return changeProfilePhoto(state, action)
         default:
             return state;
+    }
+}
+
+const changeProfilePhoto = (state, action) => {
+    return {
+        ...state,
+        profilePhoto: action.payload
     }
 }
 

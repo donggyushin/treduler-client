@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../../../actions/authenticationActions'
+import { changeProfileTrue } from '../../../../../actions/changeProfile'
 
 
 
@@ -110,6 +111,7 @@ class PopUpStatusBar extends React.Component {
     render() {
         const { popupStatusBar, makePopunInvisible, logoutUser } = this.props;
         const { name } = this.props.user;
+        const { changeProfileButtonClicked } = this;
         return (
             <PopupStateBar ref={this.setWrapperRef} popupStatusBar={popupStatusBar}>
 
@@ -119,14 +121,19 @@ class PopUpStatusBar extends React.Component {
                 <XIcon onClick={makePopunInvisible}>X</XIcon>
 
                 <Divider />
-                <NormalText>
+                <NormalText onClick={changeProfileButtonClicked}>
                     Change profile
-</NormalText>
+                </NormalText>
                 <DividerAboveLogout />
                 <LogoutText onClick={logoutUser}>Logout</LogoutText>
 
             </PopupStateBar>
         )
+    }
+
+    changeProfileButtonClicked = () => {
+        const { changeProfileTrue } = this.props;
+        changeProfileTrue()
     }
 }
 
@@ -136,4 +143,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { logoutUser })(PopUpStatusBar) 
+export default connect(mapStateToProps, { logoutUser, changeProfileTrue })(PopUpStatusBar) 
