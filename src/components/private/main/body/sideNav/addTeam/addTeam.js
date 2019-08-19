@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux'
 import { turnAddNewTeamOn } from '../../../../../../actions/addNewTeamForm'
 
+
 const TeamsContainer = styled.div`
     display:flex;
     align-items:center;
@@ -40,9 +41,13 @@ const Plus = styled.div`
     width: 20px;
     border-radius: 4px;
     &:hover {
-        background:rgba(0,0,0,0.2);
+        background:rgba(0,0,0,0.05);
     }
 `
+
+
+
+
 
 
 class AddTeam extends React.Component {

@@ -4,6 +4,7 @@ import Navigation from './nav'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../../actions/user'
 import { fetchAllBoards } from '../../../actions/board'
+import { fetchTeams } from '../../../actions/team'
 import Body from './body';
 import { Helmet } from 'react-helmet'
 import ChangeProfile from './ChangeProfile';
@@ -22,9 +23,10 @@ class Main extends React.Component {
 
 
     componentDidMount() {
-        const { getUserInfo, fetchAllBoards } = this.props;
+        const { getUserInfo, fetchAllBoards, fetchTeams } = this.props;
         getUserInfo()
         fetchAllBoards()
+        fetchTeams()
     }
 
     render() {
@@ -52,4 +54,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { getUserInfo, fetchAllBoards })(Main) 
+export default connect(mapStateToProps, { getUserInfo, fetchAllBoards, fetchTeams })(Main) 
