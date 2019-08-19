@@ -8,11 +8,11 @@ const Container = styled.div`
     flex-direction:column;
     width: 200px;
     margin-right: 50px;
-    
 `
 
 
 class SideNav extends React.Component {
+
     render() {
         return <Container>
             <Item />

@@ -49,7 +49,6 @@ class Nav extends React.Component {
     render() {
         const { navigationHasBackgroundColor } = this.props;
         return <Container navigationHasBackgroundColor={navigationHasBackgroundColor}>
-
             <LogoText>Treduler</LogoText>
             <ButtonContainer>
                 <a href={'/login'}>

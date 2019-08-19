@@ -106,6 +106,7 @@ class ChangeProfile extends React.Component {
         buttonDisable: true,
         imageFile: null
     }
+
     render() {
         const { profilePhoto, buttonDisable } = this.state
         const { changeInput, saveButtonClicked } = this;

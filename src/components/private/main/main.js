@@ -7,6 +7,7 @@ import { fetchAllBoards } from '../../../actions/board'
 import Body from './body';
 import { Helmet } from 'react-helmet'
 import ChangeProfile from './ChangeProfile';
+import AddNewTeamForm from './AddNewTeamForm/AddNewTeamForm';
 
 
 const Container = styled.div`
@@ -27,7 +28,7 @@ class Main extends React.Component {
     }
 
     render() {
-        const { changeProfile } = this.props;
+        const { changeProfile, addNewTeamForm } = this.props;
         return (
             <Container>
                 <Helmet>
@@ -38,6 +39,7 @@ class Main extends React.Component {
                 <Navigation />
                 <Body />
                 {changeProfile && <ChangeProfile />}
+                {addNewTeamForm.view && <AddNewTeamForm />}
             </Container>
         )
     }
@@ -45,7 +47,8 @@ class Main extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        changeProfile: state.changeProfile.changeProfile
+        changeProfile: state.changeProfile.changeProfile,
+        addNewTeamForm: state.addNewTeamForm
     }
 }
 
