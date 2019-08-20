@@ -16,6 +16,7 @@ background:${props => props.board ? 'rgba(0,0,0,.35)' : '#026aa7'};
     position:fixed;
     top:0;
     left:0;
+    z-index: 1;
 `
 
 const LeftContainer = styled.div`

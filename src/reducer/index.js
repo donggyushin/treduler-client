@@ -9,6 +9,7 @@ import comment from './comment'
 import checklist from './checklist'
 import changeProfile from './changeProfile'
 import addNewTeamForm from './AddNewTeamForm'
+import createNewTeamBoard from './CreateNewTeamBoard'
 import team from './team'
 
 const initialState = {};
@@ -23,7 +24,8 @@ const allReducers = combineReducers({
     checklist,
     changeProfile,
     addNewTeamForm,
-    team
+    team,
+    createNewTeamBoard
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

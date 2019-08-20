@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { postNewBoard } from '../../../../../../actions/board'
 
 const Container = styled.div`
-    position:absolute;
+    position:fixed;
     top:0;
     left:0;
     width:100vw;
@@ -13,6 +13,8 @@ const Container = styled.div`
     display:flex;
     flex-direction:column;
     align-items:center;
+    z-index:2;
+    overflow:hidden;
 `
 
 const Form = styled.div`
@@ -26,6 +28,7 @@ const Card = styled.div`
     height: 130px;
     position:relative;
     background:transparent;
+    z-index:3;
 `
 
 const BackgroundImageContainer = styled.div`

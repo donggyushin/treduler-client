@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { turnAddNewTeamDown } from '../../../../actions/addNewTeamForm'
+import { postNewTeam } from '../../../../actions/team'
 import Textarea from 'react-autosize-textarea'
 import './styles.css'
 
@@ -147,7 +148,7 @@ class AddNewTeamForm extends React.Component {
 
     render() {
         const { name, description, nameAble, descriptionAble, buttonDisable } = this.state;
-        const { handleInput } = this;
+        const { handleInput, createButtonClicked } = this;
         const { turnAddNewTeamDown } = this.props;
         return <Container>
             <Card ref={this.setWrapperRef}>
@@ -163,9 +164,16 @@ class AddNewTeamForm extends React.Component {
                     Description
                 </Label>
                 <Textarea name={'description'} value={description} onChange={handleInput} className={'addnewteamform-textarea'} />
-                <SaveButton disabled={buttonDisable}>Create</SaveButton>
+                <SaveButton onClick={createButtonClicked} disabled={buttonDisable}>Create</SaveButton>
             </Card>
         </Container>
+    }
+
+    createButtonClicked = () => {
+        const { postNewTeam, turnAddNewTeamDown } = this.props;
+        const { name, description } = this.state;
+        postNewTeam(name, description)
+        turnAddNewTeamDown()
     }
 
     handleInput = e => {
@@ -190,4 +198,4 @@ const mapStateToProps = state => {
     return {}
 }
 
-export default connect(mapStateToProps, { turnAddNewTeamDown })(AddNewTeamForm)
+export default connect(mapStateToProps, { turnAddNewTeamDown, postNewTeam })(AddNewTeamForm)

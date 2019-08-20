@@ -4,6 +4,7 @@ import Title from './title';
 import CreateNewBoardUI from './createNewBoardUI';
 import { connect } from 'react-redux'
 import Board from './board';
+import TeamBoards from './TeamBoards/TeamBoards';
 
 const Container = styled.div`
     display:flex;
@@ -53,7 +54,7 @@ class Boards extends React.Component {
     render() {
         const { createNewBoardUIVisible } = this.state;
         const { makeCreateNewBoardUIVisible, makeCreateNewBoardUIInvisible } = this;
-        const { boards } = this.props;
+        const { boards, teams } = this.props;
         return <Container>
             <Title icon={'far fa-user'} text={'Personal Boards'} />
             <BoardsContainer>
@@ -61,7 +62,7 @@ class Boards extends React.Component {
                 <CreateNewBoard onClick={makeCreateNewBoardUIVisible}>Create new board</CreateNewBoard>
             </BoardsContainer>
             {createNewBoardUIVisible && <CreateNewBoardUI makeCreateNewBoardUIInvisible={makeCreateNewBoardUIInvisible} />}
-
+            {teams.map(team => <TeamBoards key={team.id} boards={team.boards} team={team} />)}
         </Container>
     }
 
@@ -79,7 +80,8 @@ class Boards extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        boards: state.board.boards
+        boards: state.board.boards,
+        teams: state.team.teams
     }
 }
 

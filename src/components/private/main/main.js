@@ -9,6 +9,7 @@ import Body from './body';
 import { Helmet } from 'react-helmet'
 import ChangeProfile from './ChangeProfile';
 import AddNewTeamForm from './AddNewTeamForm/AddNewTeamForm';
+import CreateNewTeamBoardForm from './CreateNewTeamBoardForm';
 
 
 const Container = styled.div`
@@ -30,7 +31,7 @@ class Main extends React.Component {
     }
 
     render() {
-        const { changeProfile, addNewTeamForm } = this.props;
+        const { changeProfile, addNewTeamForm, createNewTeamBoardFormView } = this.props;
         return (
             <Container>
                 <Helmet>
@@ -42,6 +43,7 @@ class Main extends React.Component {
                 <Body />
                 {changeProfile && <ChangeProfile />}
                 {addNewTeamForm.view && <AddNewTeamForm />}
+                {createNewTeamBoardFormView && <CreateNewTeamBoardForm />}
             </Container>
         )
     }
@@ -50,7 +52,8 @@ class Main extends React.Component {
 const mapStateToProps = state => {
     return {
         changeProfile: state.changeProfile.changeProfile,
-        addNewTeamForm: state.addNewTeamForm
+        addNewTeamForm: state.addNewTeamForm,
+        createNewTeamBoardFormView: state.createNewTeamBoard.view
     }
 }
 
