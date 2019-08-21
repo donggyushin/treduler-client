@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CreateBoardCard from './CreateBoardCard';
+import Board from './Board';
 
 const Container = styled.div``
 
@@ -51,6 +52,7 @@ class TeamBoards extends React.Component {
                 <Title>{team.name}</Title>
             </TitleContainer>
             <BoardsContainer>
+                {boards.map(board => <Board board={board} key={board.id} />)}
                 <CreateBoardCard teamId={team.id} />
             </BoardsContainer>
         </Container>

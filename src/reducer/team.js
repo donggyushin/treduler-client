@@ -1,7 +1,8 @@
-import { FETCH_TEAMS, POST_NEW_TEAM } from "../actions/type";
+import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM } from "../actions/type";
 
 const initialState = {
-    teams: []
+    teams: [],
+    team: {}
 }
 
 export default function (state = initialState, action) {
@@ -10,8 +11,17 @@ export default function (state = initialState, action) {
             return fetchTeams(state, action)
         case POST_NEW_TEAM:
             return postNewTeam(state, action)
+        case FETCH_A_TEAM:
+            return fetchATeam(state, action)
         default:
             return state;
+    }
+}
+
+const fetchATeam = (state, action) => {
+    return {
+        ...state,
+        team: action.payload
     }
 }
 

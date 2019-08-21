@@ -60,6 +60,7 @@ export const TURN_ADD_NEW_TEAM_FORM_DOWN = 'TURN_ADD_NEW_TEAM_FORM_DOWN'
 // Team
 export const FETCH_TEAMS = 'FETCH_TEAMS'
 export const POST_NEW_TEAM = 'POST_NEW_TEAM'
+export const FETCH_A_TEAM = 'FETCH_A_TEAM'
 
 
 // CreateNewTeamBoard

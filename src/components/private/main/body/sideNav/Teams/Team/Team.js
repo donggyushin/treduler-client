@@ -58,15 +58,24 @@ const Description = styled.div`
     }
 `
 
+
+const A = styled.a`
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+`
+
 class Team extends React.Component {
     render() {
         const { team } = this.props;
         return <Container>
-            <TeamPhotoContainer>
-                <TeamPhoto src={team.photo ? team.photo : require(`../../../../../../../assets/boardBackground/0.png`)} />
-            </TeamPhotoContainer>
-            <TeamName>{team.name}</TeamName>
-            <Description>{team.description ? team.description : 'No description'}</Description>
+            <A href={`/team/${team.id}`}>
+                <TeamPhotoContainer>
+                    <TeamPhoto src={team.photo ? team.photo : require(`../../../../../../../assets/boardBackground/0.png`)} />
+                </TeamPhotoContainer>
+                <TeamName>{team.name}</TeamName>
+                <Description>{team.description ? team.description : 'No description'}</Description>
+            </A>
         </Container>
     }
 }
