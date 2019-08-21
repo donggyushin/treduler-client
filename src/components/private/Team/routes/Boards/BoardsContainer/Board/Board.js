@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const BackgroundImage = styled.img`
     width:100%;
-    min-height:96px;
+    
 `
 
 const Title = styled.div`

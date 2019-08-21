@@ -1,12 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import TeamMembers from './TeamMembers';
 
-const Container = styled.div``
+const Container = styled.div`
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+`
 
 class Members extends React.Component {
     render() {
         return <Container>
-            Members
+            <TeamMembers />
         </Container>
     }
 }
