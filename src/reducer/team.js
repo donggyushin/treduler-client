@@ -13,6 +13,7 @@ export default function (state = initialState, action) {
             return postNewTeam(state, action)
         case FETCH_A_TEAM:
             return fetchATeam(state, action)
+
         default:
             return state;
     }

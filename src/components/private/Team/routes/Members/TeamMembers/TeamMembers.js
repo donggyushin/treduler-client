@@ -32,6 +32,7 @@ visibility: visible;
 `
 
 const InviteNewMemberButton = styled.button`
+outline:none;
     align-items: center;
 background-color: rgb(90, 172, 68);
 border-bottom-color: rgb(255, 255, 255);

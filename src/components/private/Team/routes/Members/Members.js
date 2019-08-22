@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import TeamMembers from './TeamMembers';
+import MemberLists from './MemberLists';
 
 const Container = styled.div`
     display:flex;
@@ -12,6 +13,7 @@ class Members extends React.Component {
     render() {
         return <Container>
             <TeamMembers />
+            <MemberLists />
         </Container>
     }
 }

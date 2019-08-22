@@ -11,6 +11,7 @@ import changeProfile from './changeProfile'
 import addNewTeamForm from './AddNewTeamForm'
 import createNewTeamBoard from './CreateNewTeamBoard'
 import team from './team'
+import notification from './notification'
 
 const initialState = {};
 
@@ -25,7 +26,8 @@ const allReducers = combineReducers({
     changeProfile,
     addNewTeamForm,
     team,
-    createNewTeamBoard
+    createNewTeamBoard,
+    notification
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
