@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
 import { turnDownCreateNewBoard } from '../../../../actions/CreateNewTeamBoard'
+import { createNewTeamBoard } from '../../../../actions/team'
 
 const Container = styled.div`
     position:fixed;
@@ -110,18 +111,36 @@ class CreateNewTeamBoardForm extends React.Component {
     }
     render() {
         const { loading, bacgkroundImageNumber, buttonDisabled, title } = this.state;
-        const { handleInput } = this;
+        const { handleInput, createButtonClicked, enterKeyPressed } = this;
         return <Container>
             {loading === false &&
                 <Card ref={this.setWrapperRef}>
                     <BackgroundImageContainer>
                         <BackgroundImage src={require(`../../../../assets/boardBackground/${bacgkroundImageNumber}.png`)} />
-                        <TitleInput onChange={handleInput} name={'title'} value={title} placeholder={'Add board title'} />
+                        <TitleInput onKeyPress={enterKeyPressed} onChange={handleInput} name={'title'} value={title} placeholder={'Add board title'} />
                     </BackgroundImageContainer>
-                    <CreateButton disabled={buttonDisabled}>Create</CreateButton>
+                    <CreateButton onClick={createButtonClicked} disabled={buttonDisabled}>Create</CreateButton>
                 </Card>
             }
         </Container>
+    }
+
+    enterKeyPressed = (e) => {
+        if (this.state.title.length === 0) {
+            return;
+        }
+        if (e.key === 'Enter') {
+            this.createButtonClicked()
+        }
+
+    }
+
+    createButtonClicked = () => {
+        const { bacgkroundImageNumber, title } = this.state
+        const teamId = localStorage.getItem('teamId');
+        const { createNewTeamBoard, turnDownCreateNewBoard } = this.props;
+        createNewTeamBoard(title, bacgkroundImageNumber, teamId)
+        turnDownCreateNewBoard()
     }
 
     handleInput = e => {
@@ -144,4 +163,4 @@ class CreateNewTeamBoardForm extends React.Component {
 const mapStateToProps = state => {
     return {}
 }
-export default connect(mapStateToProps, { turnDownCreateNewBoard })(CreateNewTeamBoardForm)
+export default connect(mapStateToProps, { turnDownCreateNewBoard, createNewTeamBoard })(CreateNewTeamBoardForm)

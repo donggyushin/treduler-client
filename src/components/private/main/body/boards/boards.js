@@ -38,7 +38,7 @@ const CreateNewBoard = styled.div`
     transition-timing-function: ease;
     margin-right:15px;
     cursor: pointer;
-
+    margin-bottom: 25px;
     &:hover{
         background:rgba(9,30,66,.08);
     }

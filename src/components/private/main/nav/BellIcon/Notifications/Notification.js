@@ -61,7 +61,7 @@ class Notification extends React.Component {
         return <Container ref={this.setWrapperRef}>
             <Header turnDownNotification={turnDownNotification} />
             {notifications && notifications.map(notification => <NotificationItem key={notification.id} notification={notification} />)}
-            {unreadNotificationNumbers !== 0 && <DeleteAllButton />}
+            {notifications.length !== 0 && <DeleteAllButton />}
 
         </Container>
     }

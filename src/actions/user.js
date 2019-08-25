@@ -1,6 +1,42 @@
 import axios from 'axios';
 import { SET_USER_INFO, CHANGE_PROFILE_PHOTO } from './type';
 
+export const getOutOfTeam = (teamId) => dispatch => {
+    axios.delete(`/api/user/${teamId}`, {
+        headers: {
+            jwt: localStorage.getItem('jwt')
+        }
+    })
+        .then(res => res.data)
+        .then(data => {
+            if (data.ok) {
+                window.location.href = "/"
+            } else {
+                alert(data.message)
+            }
+        })
+        .catch(err => console.error(err))
+}
+
+export const acceptInvitation = (teamId) => dispatch => {
+    axios.post(`/api/user/accept-invitation`, {
+        teamId
+    }, {
+            headers: {
+                jwt: localStorage.getItem('jwt')
+            }
+        })
+        .then(res => res.data)
+        .then(data => {
+            if (data.ok) {
+                window.location.href = "/"
+            } else {
+                alert(data.message)
+            }
+        })
+        .catch(err => console.error(err))
+}
+
 export const changeProfilePhoto = (profilePhoto) => dispatch => {
     const token = localStorage.getItem('jwt')
     axios.post(`/api/user/profile`, profilePhoto, {

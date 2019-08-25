@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import { getOutOfTeam } from '../../../../../../../actions/user'
 
 const Container = styled.div`
     display:flex;
@@ -69,21 +70,30 @@ const LeaveButton = styled.button`
 class MemberItem extends React.Component {
     render() {
         const { member, me } = this.props;
+        const { leaveButtonClicked } = this;
         return <Container>
             <ProfileImageAndNameContainer>
                 <ProfileImage src={member.profilePhoto ? member.profilePhoto : 'https://d33v4339jhl8k0.cloudfront.net/docs/assets/528e78fee4b0865bc066be5a/images/52af1e8ce4b074ab9e98f0e0/file-mxuiNezRS5.jpg'} />
                 <UserName>{member.name}</UserName>
             </ProfileImageAndNameContainer>
             <ButtonsContainer>
-                {member.email === me.email && <LeaveButton>Leave</LeaveButton>}
+                {member.email === me.email && <LeaveButton onClick={leaveButtonClicked}>Leave</LeaveButton>}
 
             </ButtonsContainer>
         </Container>
     }
+
+    leaveButtonClicked = () => {
+        const { getOutOfTeam, team } = this.props;
+        getOutOfTeam(team.id)
+    }
 }
 
 const mapStateToProps = state => {
-    return { me: state.user }
+    return {
+        me: state.user,
+        team: state.team.team
+    }
 }
 
-export default connect(mapStateToProps, {})(MemberItem)
+export default connect(mapStateToProps, { getOutOfTeam })(MemberItem)

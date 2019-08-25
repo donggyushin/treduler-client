@@ -1,5 +1,24 @@
 import axios from 'axios';
-import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM } from './type';
+import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM, CREATE_NEW_TEAM_BOARD } from './type';
+
+export const createNewTeamBoard = (title, backgroundImage, team) => dispatch => {
+    axios.post(`/api/team/board`, {
+        title,
+        backgroundImage,
+        team
+    })
+        .then(res => res.data)
+        .then(data => {
+            if (data.ok) {
+                dispatch({
+                    type: CREATE_NEW_TEAM_BOARD,
+                    payload: data.board
+                })
+            } else {
+                alert(data.message)
+            }
+        })
+}
 
 export const inviteNewMember = (teamId, email) => dispatch => {
     axios.post(`/api/team/add-member`, {

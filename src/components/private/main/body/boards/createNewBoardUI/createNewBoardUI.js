@@ -153,7 +153,7 @@ class CreateNewBoardUI extends React.Component {
     CreateButtonClicked = () => {
         const { title, backgroundImage } = this.state;
         const { postNewBoard, makeCreateNewBoardUIInvisible } = this.props;
-
+        console.log('here')
         postNewBoard(title, backgroundImage)
         makeCreateNewBoardUIInvisible()
     }

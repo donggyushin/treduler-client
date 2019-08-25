@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
 import { deleteNotification } from '../../../../../../../actions/notification'
+import { turnOnInvitation } from '../../../../../../../actions/Invitation'
 
 
 const Container = styled.div`
@@ -14,6 +15,7 @@ position:relative;
     padding-top: 4px;
     padding-bottom: 4px;
     border-radius: 3px;
+    cursor: pointer;
     &:hover {
         background: rgba(0,0,0,0.06);
     }
@@ -35,11 +37,16 @@ class NotificationItem extends React.Component {
 
     render() {
         const { notification } = this.props;
-        const { xButtonClicked } = this;
-        return <Container>
+        const { xButtonClicked, itemClicked } = this;
+        return <Container onClick={() => itemClicked(notification.sender, notification.teamId)}>
             {notification.message}
             <XButton onClick={xButtonClicked}>X</XButton>
         </Container>
+    }
+
+    itemClicked = (senderEmail, teamId) => {
+        const { turnOnInvitation } = this.props;
+        turnOnInvitation(senderEmail, teamId)
     }
 
     xButtonClicked = () => {
@@ -52,4 +59,4 @@ const mapStateToProps = state => {
     return {}
 }
 
-export default connect(mapStateToProps, { deleteNotification })(NotificationItem)
+export default connect(mapStateToProps, { deleteNotification, turnOnInvitation })(NotificationItem)

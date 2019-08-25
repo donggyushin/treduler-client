@@ -1,4 +1,4 @@
-import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM } from "../actions/type";
+import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM, CREATE_NEW_TEAM_BOARD } from "../actions/type";
 
 const initialState = {
     teams: [],
@@ -13,9 +13,36 @@ export default function (state = initialState, action) {
             return postNewTeam(state, action)
         case FETCH_A_TEAM:
             return fetchATeam(state, action)
-
+        case CREATE_NEW_TEAM_BOARD:
+            return createNewTeamBoard(state, action)
         default:
             return state;
+    }
+}
+
+const createNewTeamBoard = (state, action) => {
+    const updatedTeams = []
+    state.teams.map(team => {
+        console.log('team.id: ', team.id)
+        console.log('action payload team: ', action.payload.team)
+        if (team.id === parseInt(action.payload.team)) {
+            console.log('here')
+            const updatedTeam = {
+                ...team,
+                boards: [
+                    ...team.boards,
+                    action.payload
+                ]
+            }
+            updatedTeams.push(updatedTeam)
+        } else {
+            return updatedTeams.push(team)
+        }
+    })
+
+    return {
+        ...state,
+        teams: updatedTeams
     }
 }
 
