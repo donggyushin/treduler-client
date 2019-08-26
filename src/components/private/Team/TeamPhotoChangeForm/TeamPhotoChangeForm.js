@@ -29,7 +29,7 @@ const Card = styled.div`
 const TeamPhoto = styled.img`
     width:300px;
     height:200px;
-    object-fit:cover;
+    object-fit:contain;
     border-radius: 5px;
 `
 
@@ -127,25 +127,36 @@ class TeamPhotoChangeForm extends React.Component {
         const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/blog-naver-com-donggyu-00/upload'
         const CLOUDINARY_UPLOAD_PRESET = 'ndp6lsvf';
         var formData = new FormData();
+        console.log('file:', file)
         formData.append('file', file)
         formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-        axios({
-            url: CLOUDINARY_UPLOAD_URL,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data: {
-                formData
-            }
-        }).then(res => res.data)
-            .then(data => {
-                const imageFilePath = data.secure_url
-                console.log('image file path: ', imageFilePath)
-                changeTeamPhoto(imageFilePath, team.id)
-            })
-            .catch(err => console.error(err))
+        formData.append('api_key', '549695488835179');
+        formData.append('api_secret', 'daxgUAkjrrLmxbfLCMJzgm8Xqbc')
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', CLOUDINARY_UPLOAD_URL, false);
+        xhr.send(formData);
+        const imageResponse = JSON.parse(xhr.responseText)
+        const imagePath = imageResponse.secure_url;
+        changeTeamPhoto(imagePath, team.id)
         turnDownTeamPhotoChangeForm()
+        // axios({
+        //     url: CLOUDINARY_UPLOAD_URL,
+        //     method: 'POST',
+        //     headers: {
+        //         "X-Requested-With": "XMLHttpRequest"
+        //     },
+        //     data: {
+        //         formData
+        //     }
+        // }).then(res => res.data)
+        //     .then(data => {
+        //         const imageFilePath = data.secure_url
+        //         console.log('image file path: ', imageFilePath)
+        //         changeTeamPhoto(imageFilePath, team.id)
+        //     })
+        //     .catch(err => console.error(err))
+        // turnDownTeamPhotoChangeForm()
     }
 
 

@@ -25,6 +25,7 @@ const TeamPhoto = styled.img`
     width:100%;
     min-height:85px;
     cursor: pointer;
+    object-fit: contain;
 `
 
 const TeamName = styled.div`
