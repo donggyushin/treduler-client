@@ -21,6 +21,7 @@ export default function (state = initialState, action) {
 }
 
 const createNewTeamBoard = (state, action) => {
+
     const updatedTeams = []
     state.teams.map(team => {
         console.log('team.id: ', team.id)

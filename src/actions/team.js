@@ -2,6 +2,7 @@ import axios from 'axios';
 import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM, CREATE_NEW_TEAM_BOARD } from './type';
 
 export const createNewTeamBoard = (title, backgroundImage, team) => dispatch => {
+    console.log('create new team board')
     axios.post(`/api/team/board`, {
         title,
         backgroundImage,

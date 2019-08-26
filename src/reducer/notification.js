@@ -1,4 +1,4 @@
-import { FETCH__UNREAD_NOTIFICATIONS_NUMBER, FETCH_ALL_NOTIFICATIONS, READ_ALL_NOTIFICATIONS, DELETE_NOTIFICATION, DELETE_ALL_NOTIFICATIONS } from "../actions/type";
+import { FETCH__UNREAD_NOTIFICATIONS_NUMBER, FETCH_ALL_NOTIFICATIONS, READ_ALL_NOTIFICATIONS, DELETE_NOTIFICATION, DELETE_ALL_NOTIFICATIONS, ADD_NUMBER_ONE_UNREAD_NOTIFICATION } from "../actions/type";
 
 const initialState = {
     notifications: [],
@@ -17,8 +17,17 @@ export default function (state = initialState, action) {
             return deleteNotification(state, action)
         case DELETE_ALL_NOTIFICATIONS:
             return deleteAllNotifications(state, action)
+        case ADD_NUMBER_ONE_UNREAD_NOTIFICATION:
+            return addNumberOneUnreadNotification(state, action)
         default:
             return state;
+    }
+}
+
+const addNumberOneUnreadNotification = (state, action) => {
+    return {
+        ...state,
+        unreadNotificationNumbers: state.unreadNotificationNumbers + 1
     }
 }
 

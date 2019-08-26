@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { FETCH__UNREAD_NOTIFICATIONS_NUMBER, FETCH_ALL_NOTIFICATIONS, READ_ALL_NOTIFICATIONS, DELETE_NOTIFICATION, DELETE_ALL_NOTIFICATIONS } from './type';
+import { FETCH__UNREAD_NOTIFICATIONS_NUMBER, FETCH_ALL_NOTIFICATIONS, READ_ALL_NOTIFICATIONS, DELETE_NOTIFICATION, DELETE_ALL_NOTIFICATIONS, ADD_NUMBER_ONE_UNREAD_NOTIFICATION } from './type';
+
+export const addNumberOneUnreadNotificationNumbers = () => dispatch => {
+    dispatch({
+        type: ADD_NUMBER_ONE_UNREAD_NOTIFICATION
+    })
+}
 
 export const deleteAllNotifications = () => dispatch => {
     axios.delete(`/api/notification`, {

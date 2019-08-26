@@ -4,7 +4,9 @@ import PopUpStatusBar from './PopupStatusbar/popupStatusbar';
 import HomeIcon from './HomeIcon';
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../../../actions/user'
+import { addNumberOneUnreadNotificationNumbers } from '../../../../actions/notification'
 import BellIcon from './BellIcon';
+import socketIOClient from 'socket.io-client'
 
 
 const NavigationContainer = styled.div`
@@ -79,13 +81,40 @@ const ProfileImage = styled.img`
 
 class Navigation extends React.Component {
     state = {
-        popupStatusBarVisible: false
+        popupStatusBarVisible: false,
+        endpoint: "http://127.0.0.1:8080"
     }
 
     componentDidMount() {
-        const { getUserInfo } = this.props;
+        const { getUserInfo, user, addNumberOneUnreadNotificationNumbers } = this.props;
+        const { endpoint } = this.state;
+        const socket = socketIOClient(endpoint)
         getUserInfo();
+        console.log('user: ', user)
+        if (user.email) {
+            socket.emit('login', user)
+            socket.on("unreadEmailNumbers", () => {
+                console.log('unread email numbers!')
+                addNumberOneUnreadNotificationNumbers()
+            })
+        }
+
     }
+
+    componentWillReceiveProps(nextProps) {
+        const { user } = nextProps;
+        const { endpoint } = this.state;
+        const { addNumberOneUnreadNotificationNumbers } = this.props;
+        const socket = socketIOClient(endpoint)
+        if (user.email) {
+            socket.emit('login', user)
+            socket.on("unreadEmailNumbers", () => {
+                console.log('unread email numbers!')
+                addNumberOneUnreadNotificationNumbers()
+            })
+        }
+    }
+
 
     render() {
         const { popupStatusBarVisible } = this.state;
@@ -133,4 +162,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { getUserInfo })(Navigation) 
+export default connect(mapStateToProps, { getUserInfo, addNumberOneUnreadNotificationNumbers })(Navigation) 

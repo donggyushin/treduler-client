@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
 import { inviteNewMember } from '../../../../../../../actions/team'
+import socketIOClient from 'socket.io-client';
 
 const Container = styled.div`
     position:absolute;
@@ -205,7 +206,8 @@ class InviteMemberForm extends React.Component {
 
     state = {
         buttonDisabled: true,
-        email: ""
+        email: "",
+        endpoint: 'http://127.0.0.1:8080'
     }
 
     render() {
@@ -227,8 +229,13 @@ class InviteMemberForm extends React.Component {
 
     inviteButtonClicked = () => {
         const { inviteNewMember, team, shutOffForm } = this.props;
-        const { email } = this.state;
+        const { email, endpoint } = this.state;
+        const socket = socketIOClient(endpoint)
+        const user = {
+            email
+        }
         inviteNewMember(team.id, email)
+        socket.emit('send-invitation', user)
         shutOffForm()
     }
 
@@ -250,7 +257,8 @@ class InviteMemberForm extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        team: state.team.team
+        team: state.team.team,
+        user: state.user
     }
 }
 
