@@ -1,5 +1,23 @@
 import axios from 'axios';
-import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM, CREATE_NEW_TEAM_BOARD } from './type';
+import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM, CREATE_NEW_TEAM_BOARD, CHANGE_TEAM_PHOTO } from './type';
+
+export const changeTeamPhoto = (filePath, teamId) => dispatch => {
+    axios.put(`/api/team/teamPhoto/${teamId}`, {
+        filePath
+    })
+        .then(res => res.data)
+        .then(data => {
+            if (data.ok) {
+                dispatch({
+                    type: CHANGE_TEAM_PHOTO,
+                    payload: data.team
+                })
+            } else {
+                alert(data.message)
+            }
+        })
+        .catch(err => console.error(err))
+}
 
 export const createNewTeamBoard = (title, backgroundImage, team) => dispatch => {
     console.log('create new team board')

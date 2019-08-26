@@ -84,7 +84,7 @@ class Board extends React.Component {
                 </title>
             </Helmet>
             <BackgroundImageContainer>
-                {loading === false && <BackgroundImage src={require(`../../../assets/boardBackground/${board.backgroundImage}.png`)} />}
+                {(loading === false && board.backgroundImage) && <BackgroundImage src={require(`../../../assets/boardBackground/${board.backgroundImage}.png`)} />}
             </BackgroundImageContainer>
             <Nav board={true} />
             <Margin40 />

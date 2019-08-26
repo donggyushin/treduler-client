@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
+import { turnOnTeamPhotoChangeForm } from '../../../../../actions/TeamPhotoChangeForm'
 
 const Container = styled.div`
     width:650px;
@@ -23,6 +24,7 @@ const TeamPhotoContainer = styled.div`
 const TeamPhoto = styled.img`
     width:100%;
     min-height:85px;
+    cursor: pointer;
 `
 
 const TeamName = styled.div`
@@ -125,16 +127,13 @@ outline:none;
 `
 
 class TeamInfo extends React.Component {
-
-
-
     render() {
         const { team } = this.props;
+        const { photoClicked } = this;
         return <Container>
             <Column>
                 <TeamPhotoContainer>
-
-                    <TeamPhoto src={team.photo ? team.photo : require('../../../../../assets/boardBackground/0.png')} />
+                    <TeamPhoto onClick={photoClicked} src={team.photo ? team.photo : require('../../../../../assets/boardBackground/0.png')} />
                 </TeamPhotoContainer>
             </Column>
             <Column>
@@ -144,6 +143,11 @@ class TeamInfo extends React.Component {
             </Column>
         </Container>
     }
+
+    photoClicked = () => {
+        const { turnOnTeamPhotoChangeForm } = this.props;
+        turnOnTeamPhotoChangeForm()
+    }
 }
 
 const mapStateToProps = state => {
@@ -152,4 +156,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {})(TeamInfo)
+export default connect(mapStateToProps, { turnOnTeamPhotoChangeForm })(TeamInfo)

@@ -1,4 +1,4 @@
-import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM, CREATE_NEW_TEAM_BOARD } from "../actions/type";
+import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM, CREATE_NEW_TEAM_BOARD, CHANGE_TEAM_PHOTO } from "../actions/type";
 
 const initialState = {
     teams: [],
@@ -15,8 +15,20 @@ export default function (state = initialState, action) {
             return fetchATeam(state, action)
         case CREATE_NEW_TEAM_BOARD:
             return createNewTeamBoard(state, action)
+        case CHANGE_TEAM_PHOTO:
+            return changeTeamPhoto(state, action)
         default:
             return state;
+    }
+}
+
+const changeTeamPhoto = (state, action) => {
+    return {
+        ...state,
+        team: {
+            ...state.team,
+            photo: action.payload.photo
+        }
     }
 }
 
