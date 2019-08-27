@@ -8,6 +8,7 @@ import { fetchComments } from '../../../../actions/comment'
 import Description from './Description';
 import Checklists from './Checklists';
 import Comments from './Comments';
+import socketIOClient from 'socket.io-client';
 
 const Container = styled.div`
     position:absolute;
@@ -53,6 +54,8 @@ const GreyThinText = styled.div`
 const Margin = styled.div`
     margin-top:30px;
 `
+const SOCKET_ENDPOINT = "http://127.0.0.1:8082"
+const socket = socketIOClient(SOCKET_ENDPOINT);
 
 class CardDetail extends React.Component {
 
@@ -65,19 +68,42 @@ class CardDetail extends React.Component {
     }
 
     componentDidMount() {
+        console.log('component did mount')
         document.addEventListener('mousedown', this.handleClickOutside);
-        const { card, fetchChecklists, fetchComments } = this.props;
-        if (card.id) {
+        const { card, fetchChecklists, fetchComments, user, board } = this.props;
+        if (card.id && user.email) {
             fetchChecklists(card.id)
             fetchComments(card.id)
             this.setState({
                 loading: false
             })
+
+            if (board.team) {
+
+                const data = {
+                    userEmail: user.email,
+                    cardId: card.id
+                }
+                socket.emit('login', data);
+            }
+
+
         }
     }
 
+
+
+
+
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
+        console.log('component will unmount')
+        const { board } = this.props;
+        if (board.team) {
+
+
+            socket.emit('leave-card-detail')
+        }
     }
 
     /**
@@ -99,7 +125,9 @@ class CardDetail extends React.Component {
 
 
     state = {
-        loading: true
+        loading: true,
+        socketConnection: 0,
+        endpoint: "http://127.0.0.1:8082"
     }
 
     render() {
@@ -135,7 +163,9 @@ class CardDetail extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        card: state.card.card
+        card: state.card.card,
+        user: state.user,
+        board: state.board.board
     }
 }
 
