@@ -1,7 +1,15 @@
 import axios from 'axios';
 import { FETCH_ALL_LIST_WITH_CARDS, CREATE_NEW_LIST, DELETE_LIST, CREATE_NEW_CARD, DELETE_CARD } from './type';
+import socketIOClient from 'socket.io-client';
 
-export const DeleteCard = (cardId) => dispatch => {
+export const socketDeleteCard = data => dispatch => {
+    dispatch({
+        type: DELETE_CARD,
+        payload: data
+    })
+}
+
+export const DeleteCard = (cardId) => (dispatch, getState) => {
     axios.delete(`/api/card/${cardId}`)
         .then(res => res.data)
         .then(data => {
@@ -10,6 +18,20 @@ export const DeleteCard = (cardId) => dispatch => {
                     type: DELETE_CARD,
                     payload: data.card
                 })
+                const endpoint = "http://127.0.0.1:8081"
+                const socket = socketIOClient(endpoint);
+                const { user, board } = getState()
+                const boardId = board.board.id;
+                const dataToSocket = {
+                    board: {
+                        id: boardId
+                    },
+                    user: {
+                        email: user.email
+                    }
+                }
+                socket.emit('login', dataToSocket);
+                socket.emit('delete-card', data.card)
             } else {
                 alert(data.message)
             }
@@ -17,7 +39,14 @@ export const DeleteCard = (cardId) => dispatch => {
         .catch(err => console.error(err))
 }
 
-export const CreateNewCard = (listId, title) => dispatch => {
+export const socketCreateNewCard = data => dispatch => {
+    dispatch({
+        type: CREATE_NEW_CARD,
+        payload: data
+    })
+}
+
+export const CreateNewCard = (listId, title) => (dispatch, getState) => {
     axios.post('/api/card/', {
         listId,
         title
@@ -29,6 +58,20 @@ export const CreateNewCard = (listId, title) => dispatch => {
                     type: CREATE_NEW_CARD,
                     payload: data.card
                 })
+                const endpoint = "http://127.0.0.1:8081"
+                const socket = socketIOClient(endpoint);
+                const { user, board } = getState()
+                const boardId = board.board.id;
+                const dataToSocket = {
+                    board: {
+                        id: boardId
+                    },
+                    user: {
+                        email: user.email
+                    }
+                }
+                socket.emit('login', dataToSocket);
+                socket.emit('post-card', data.card)
             } else {
                 alert(data.message)
             }
@@ -36,7 +79,14 @@ export const CreateNewCard = (listId, title) => dispatch => {
         .catch(err => console.error(err))
 }
 
-export const DeleteList = (listId) => dispatch => {
+export const socketDeleteList = (listId) => dispatch => {
+    dispatch({
+        type: DELETE_LIST,
+        payload: listId
+    })
+}
+
+export const DeleteList = (listId) => (dispatch, getState) => {
     axios.delete(`/api/list/${listId}`)
         .then(res => res.data)
         .then(data => {
@@ -45,6 +95,20 @@ export const DeleteList = (listId) => dispatch => {
                     type: DELETE_LIST,
                     payload: listId
                 })
+                const endpoint = "http://127.0.0.1:8081"
+                const socket = socketIOClient(endpoint);
+                const { user, board } = getState()
+                const boardId = board.board.id;
+                const dataToSocket = {
+                    board: {
+                        id: boardId
+                    },
+                    user: {
+                        email: user.email
+                    }
+                }
+                socket.emit('login', dataToSocket);
+                socket.emit('delete-list', listId)
             } else {
                 alert(data.message)
             }
@@ -52,7 +116,14 @@ export const DeleteList = (listId) => dispatch => {
         .catch(err => console.error(err))
 }
 
-export const createNewList = (title, boardId) => dispatch => {
+export const socketCreateNewList = data => dispatch => {
+    dispatch({
+        type: CREATE_NEW_LIST,
+        payload: data
+    })
+}
+
+export const createNewList = (title, boardId) => (dispatch, getState) => {
     axios.post(`/api/list/`, {
         title,
         boardId
@@ -61,10 +132,25 @@ export const createNewList = (title, boardId) => dispatch => {
         .then(data => {
             if (data.ok) {
                 const newList = data.list
+                console.log('here')
                 dispatch({
                     type: CREATE_NEW_LIST,
                     payload: newList
                 })
+                const endpoint = "http://127.0.0.1:8081"
+                const socket = socketIOClient(endpoint);
+                const { user } = getState()
+                const data2 = {
+                    board: {
+                        id: boardId
+                    },
+                    user: {
+                        email: user.email
+                    }
+                }
+                socket.emit('login', data2)
+                socket.emit('post-new-list', newList)
+
             } else {
                 alert(data.message)
             }

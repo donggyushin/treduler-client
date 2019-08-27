@@ -7,6 +7,7 @@ import { getUserInfo } from '../../../../actions/user'
 import { addNumberOneUnreadNotificationNumbers } from '../../../../actions/notification'
 import BellIcon from './BellIcon';
 import socketIOClient from 'socket.io-client'
+import { getUnreadNotificationsNumber } from '../../../../actions/notification'
 
 
 const NavigationContainer = styled.div`
@@ -82,17 +83,20 @@ const ProfileImage = styled.img`
 class Navigation extends React.Component {
     state = {
         popupStatusBarVisible: false,
-        endpoint: "http://127.0.0.1:8080"
+        endpoint: "http://127.0.0.1:8080",
+        socketConnection: 0
     }
 
     componentDidMount() {
-        const { getUserInfo, user, addNumberOneUnreadNotificationNumbers } = this.props;
+        const { getUserInfo, user, addNumberOneUnreadNotificationNumbers, getUnreadNotificationsNumber } = this.props;
         const { endpoint } = this.state;
         const socket = socketIOClient(endpoint)
+        getUnreadNotificationsNumber();
         getUserInfo();
         console.log('user: ', user)
         if (user.email) {
             socket.emit('login', user)
+
             socket.on("unreadEmailNumbers", () => {
                 console.log('unread email numbers!')
                 addNumberOneUnreadNotificationNumbers()
@@ -106,20 +110,33 @@ class Navigation extends React.Component {
         const { endpoint } = this.state;
         const { addNumberOneUnreadNotificationNumbers } = this.props;
         const socket = socketIOClient(endpoint)
-        if (user.email) {
-            socket.emit('login', user)
-            socket.on("unreadEmailNumbers", () => {
-                console.log('unread email numbers!')
-                addNumberOneUnreadNotificationNumbers()
-            })
+        if (this.props.user !== nextProps.user) {
+            if (user.email) {
+                if (this.state.socketConnection === 0) {
+                    console.log('login')
+                    socket.emit('login', user)
+                    socket.on("unreadEmailNumbers", () => {
+                        console.log('unread email numbers!')
+                        addNumberOneUnreadNotificationNumbers()
+                    })
+                    this.setState({
+                        socketConnection: this.state.socketConnection + 1
+                    })
+                }
+
+            }
         }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props.user !== nextProps.user
     }
 
 
     render() {
         const { popupStatusBarVisible } = this.state;
         const { makePopunInvisible, makePopupVisible } = this;
-        const { email, name, profilePhoto } = this.props.user;
+        const { profilePhoto } = this.props.user;
         const { board } = this.props;
         return (
             <NavigationContainer board={board}>
@@ -162,4 +179,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { getUserInfo, addNumberOneUnreadNotificationNumbers })(Navigation) 
+export default connect(mapStateToProps, { getUserInfo, addNumberOneUnreadNotificationNumbers, getUnreadNotificationsNumber })(Navigation) 

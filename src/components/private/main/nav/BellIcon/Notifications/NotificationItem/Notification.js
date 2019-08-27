@@ -32,14 +32,19 @@ const XButton = styled.div`
     }
 `
 
+const Text = styled.div``
+
 class NotificationItem extends React.Component {
 
 
     render() {
         const { notification } = this.props;
         const { xButtonClicked, itemClicked } = this;
-        return <Container onClick={() => itemClicked(notification.sender, notification.teamId)}>
-            {notification.message}
+        return <Container>
+            <Text onClick={() => itemClicked(notification.sender, notification.teamId)}>
+                {notification.message}
+            </Text>
+
             <XButton onClick={xButtonClicked}>X</XButton>
         </Container>
     }

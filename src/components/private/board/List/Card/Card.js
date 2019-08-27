@@ -47,21 +47,28 @@ const XButtonForCard = styled.div`
 
 class CardComponent extends React.Component {
 
+
     render() {
-        const { deleteCard, card, list } = this.props;
-        const { cardClicked } = this;
+        const { card } = this.props;
+        const { cardClicked, xButtonClicked } = this;
         return (
             <Card onClick={() => cardClicked(card.id)}>
                 <CardBackground >
-                    <XButtonForCard onClick={() => deleteCard(card.id)}>X</XButtonForCard>
+                    <XButtonForCard onClick={xButtonClicked}>X</XButtonForCard>
                 </CardBackground>
                 {card.title}
-
             </Card>
         )
     }
 
+    xButtonClicked = (e) => {
+        e.stopPropagation()
+        const { card, deleteCard } = this.props;
+        deleteCard(card.id)
+    }
+
     cardClicked = (cardId) => {
+
         const { fetchCard } = this.props;
         fetchCard(cardId)
     }

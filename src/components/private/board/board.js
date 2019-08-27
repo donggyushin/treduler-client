@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Nav from '../main/nav'
 import { connect } from 'react-redux';
 import { fetABoard } from '../../../actions/board'
-import { fetAllListsWithCards } from '../../../actions/list'
+import { fetAllListsWithCards, socketCreateNewList, socketDeleteList, socketCreateNewCard, socketDeleteCard } from '../../../actions/list'
 import Title from './Title';
 import List from './List';
 import AddNewList from './AddNewList';
@@ -11,6 +11,7 @@ import AddNewListForm from './AddNewListForm';
 import { Helmet } from 'react-helmet'
 import CardDetail from './CardDetail';
 import ChangeProfile from '../main/ChangeProfile';
+import socketIOClient from 'socket.io-client';
 
 const Container = styled.div`
     width:100%;
@@ -32,7 +33,9 @@ const BackgroundImageContainer = styled.div`
 `
 
 const BackgroundImage = styled.img`
-    width:100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `
 
 
@@ -54,15 +57,34 @@ class Board extends React.Component {
     state = {
         loading: true,
         addNewList: false,
+        endpoint: "http://127.0.0.1:8081",
+        socketConnection: 0
     }
 
     componentDidMount() {
         const { id } = this.props.match.params;
-        const { fetABoard, fetAllListsWithCards } = this.props;
+        const { fetABoard, fetAllListsWithCards, board, user, socketCreateNewList } = this.props;
+        const { endpoint } = this.state;
         fetABoard(id)
         fetAllListsWithCards(id)
+        if (board.id && user.email) {
+            const socket = socketIOClient(this.state, endpoint);
+            const data = {
+                board,
+                user
+            }
+            socket.emit('login', data)
+            console.log('1')
+
+            socket.on('post-new-list', data => {
+                socketCreateNewList(data)
+            })
+        }
+
 
     }
+
+
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.board && nextProps.lists) {
@@ -70,7 +92,51 @@ class Board extends React.Component {
                 loading: false
             })
         }
+        if (nextProps.board !== this.props.board) {
+            if (nextProps.board.id && this.props.user.email) {
+                if (nextProps.board.team) {
+
+                    if (this.state.socketConnection === 0) {
+                        const socket = socketIOClient(this.state.endpoint);
+                        const { board } = nextProps;
+                        const { user, socketCreateNewList, socketDeleteList, socketCreateNewCard, socketDeleteCard } = this.props;
+                        const data = {
+                            board,
+                            user
+                        }
+                        socket.emit('login', data)
+
+                        socket.on('post-new-list', data => {
+                            socketCreateNewList(data)
+                        })
+
+                        socket.on('delete-list', data => {
+                            socketDeleteList(data)
+                        })
+
+                        socket.on('post-card', data => {
+                            socketCreateNewCard(data)
+                        })
+
+                        socket.on('delete-card', data => {
+                            socketDeleteCard(data)
+                        })
+
+                        this.setState({
+                            socketConnection: this.state.socketConnection + 1
+                        })
+                    }
+
+
+
+
+
+                }
+            }
+        }
+
     }
+
 
     render() {
         const { board, lists, cardVisible, changeProfile } = this.props;
@@ -112,8 +178,9 @@ const mapStateToProps = state => {
         board: state.board.board,
         lists: state.list.lists,
         cardVisible: state.card.visible,
-        changeProfile: state.changeProfile.changeProfile
+        changeProfile: state.changeProfile.changeProfile,
+        user: state.user
     }
 }
 
-export default connect(mapStateToProps, { fetABoard, fetAllListsWithCards })(Board) 
+export default connect(mapStateToProps, { fetABoard, fetAllListsWithCards, socketCreateNewList, socketDeleteList, socketCreateNewCard, socketDeleteCard })(Board) 
