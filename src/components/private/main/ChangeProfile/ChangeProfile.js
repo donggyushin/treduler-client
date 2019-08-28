@@ -124,6 +124,25 @@ class ChangeProfile extends React.Component {
         </Container>
     }
 
+    saveButtonClickedV2 = () => {
+        const { changeProfileFalse } = this.props;
+        const { imageFile } = this.state;
+        const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/blog-naver-com-donggyu-00/upload'
+        const CLOUDINARY_UPLOAD_PRESET = 'ndp6lsvf';
+        var formData = new FormData();
+        formData.append('file', imageFile);
+        formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+        formData.append('api_key', '549695488835179');
+        formData.append('api_secret', 'daxgUAkjrrLmxbfLCMJzgm8Xqbc')
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', CLOUDINARY_UPLOAD_URL, false);
+        xhr.send(formData);
+        const imageResponse = JSON.parse(xhr.responseText);
+        const imagePath = imageResponse.secure_url;
+
+    }
+
     saveButtonClicked = () => {
         const { changeProfilePhoto, changeProfileFalse } = this.props;
         const { imageFile } = this.state;

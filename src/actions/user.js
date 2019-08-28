@@ -37,6 +37,15 @@ export const acceptInvitation = (teamId) => dispatch => {
         .catch(err => console.error(err))
 }
 
+export const changeProfilePhotoV2 = (profilePhoto) => dispatch => {
+    const token = localStorage.getItem('jwt');
+    axios.post(`/api/user/profile`, profilePhoto, {
+        headers: {
+            token
+        }
+    })
+}
+
 export const changeProfilePhoto = (profilePhoto) => dispatch => {
     const token = localStorage.getItem('jwt')
     axios.post(`/api/user/profile`, profilePhoto, {
