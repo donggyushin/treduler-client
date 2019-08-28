@@ -1,7 +1,16 @@
 import axios from 'axios';
 import { FETCH_COMMENTS, POST_COMMENT, DELETE_COMMENT } from './type';
+import socketIOClient from 'socket.io-client';
+const SOCKET_ENDPOINT = 'http://127.0.0.1:8082'
 
-export const deleteComment = commentId => dispatch => {
+export const socketDeleteComment = data => dispatch => {
+    dispatch({
+        type: DELETE_COMMENT,
+        payload: data
+    })
+}
+
+export const deleteComment = commentId => (dispatch, getState) => {
     axios.delete(`/api/comment/${commentId}`)
         .then(res => res.data)
         .then(data => {
@@ -10,6 +19,14 @@ export const deleteComment = commentId => dispatch => {
                     type: DELETE_COMMENT,
                     payload: data.comment
                 })
+                const socket = socketIOClient(SOCKET_ENDPOINT)
+                const { user, card } = getState()
+                const dataToSocketLogin = {
+                    userEmail: user.email,
+                    cardId: card.card.id
+                }
+                socket.emit('login', dataToSocketLogin)
+                socket.emit('delete-comment', data.comment)
             } else {
                 alert(data.message)
             }
@@ -17,7 +34,14 @@ export const deleteComment = commentId => dispatch => {
         .catch(err => console.error(err))
 }
 
-export const postComment = (cardId, message) => dispatch => {
+export const socketPostComment = (data) => dispatch => {
+    dispatch({
+        type: POST_COMMENT,
+        payload: data
+    })
+}
+
+export const postComment = (cardId, message) => (dispatch, getState) => {
     axios.post(`/api/comment/${cardId}`, {
         message
     }, {
@@ -32,6 +56,15 @@ export const postComment = (cardId, message) => dispatch => {
                     type: POST_COMMENT,
                     payload: data.comment
                 })
+                const socket = socketIOClient(SOCKET_ENDPOINT)
+                const { user, card } = getState()
+                const dataToSocketLogin = {
+                    userEmail: user.email,
+                    cardId: card.card.id
+                }
+                socket.emit('login', dataToSocketLogin)
+                socket.emit('add-comment', data.comment)
+
             } else {
                 alert(data.message)
             }

@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { connect } from 'react-redux'
 import { deleteComment } from '../../../../../../actions/comment'
 
-const Container = styled.div``
+const Container = styled.div`
+    margin-bottom: 13px;
+`
 
 const ProfileAndCommentContainer = styled.div`
     display:flex;
@@ -35,7 +37,7 @@ margin-left: 42px;
     cursor: pointer;
     color: rgba(0,0,0,0.5);
     font-size: 12px;
-    margin-bottom: 13px;
+    
     `
 
 class CommentItem extends React.Component {

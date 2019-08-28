@@ -1,7 +1,16 @@
 import axios from 'axios';
 import { FETCH_CHECKLISTS, TOGGLE_CHECKLIST, CHANGE_CONTENT, DELETE_CHECKLIST, POST_NEW_CHECKLIST } from './type';
+import socketIOClient from 'socket.io-client';
+const SOCKET_ENDPOINT = 'http://127.0.0.1:8082'
 
-export const postNewChecklist = (cardId, content) => dispatch => {
+export const socketPostNewChecklist = data => dispatch => {
+    dispatch({
+        type: POST_NEW_CHECKLIST,
+        payload: data
+    })
+}
+
+export const postNewChecklist = (cardId, content) => (dispatch, getState) => {
     axios.post(`/api/checklist/${cardId}`, {
         content
     })
@@ -12,6 +21,14 @@ export const postNewChecklist = (cardId, content) => dispatch => {
                     type: POST_NEW_CHECKLIST,
                     payload: data.checklist
                 })
+                const socket = socketIOClient(SOCKET_ENDPOINT);
+                const { user } = getState()
+                const data2 = {
+                    userEmail: user.email,
+                    cardId
+                }
+                socket.emit('login', data2);
+                socket.emit('add-new-checklist', data.checklist)
             } else {
                 alert(data.message)
             }
@@ -19,7 +36,14 @@ export const postNewChecklist = (cardId, content) => dispatch => {
         .catch(err => console.error(err))
 }
 
-export const deleteChecklist = (checklistId) => dispatch => {
+export const socketDeleteChecklist = data => dispatch => {
+    dispatch({
+        type: DELETE_CHECKLIST,
+        payload: data
+    })
+}
+
+export const deleteChecklist = (checklistId) => (dispatch, getState) => {
     axios.delete(`/api/checklist/${checklistId}`)
         .then(res => res.data)
         .then(data => {
@@ -28,6 +52,15 @@ export const deleteChecklist = (checklistId) => dispatch => {
                     type: DELETE_CHECKLIST,
                     payload: data.checklist
                 })
+                const socket = socketIOClient(SOCKET_ENDPOINT);
+                const { user, card } = getState()
+                const data2 = {
+                    userEmail: user.email,
+                    cardId: card.card.id
+                }
+                socket.emit('login', data2);
+                socket.emit('delete-checklist', data.checklist)
+
             } else {
                 alert(data.message)
             }
@@ -35,7 +68,14 @@ export const deleteChecklist = (checklistId) => dispatch => {
         .catch(err => console.error(err))
 }
 
-export const changeContent = (checklistId, content) => dispatch => {
+export const socketChangeContent = data => dispatch => {
+    dispatch({
+        type: CHANGE_CONTENT,
+        payload: data
+    })
+}
+
+export const changeContent = (checklistId, content) => (dispatch, getState) => {
     axios.put(`/api/checklist/content/${checklistId}`, {
         content
     })
@@ -46,6 +86,14 @@ export const changeContent = (checklistId, content) => dispatch => {
                     type: CHANGE_CONTENT,
                     payload: data.checklist
                 })
+                const socket = socketIOClient(SOCKET_ENDPOINT);
+                const { user, card } = getState()
+                const data2 = {
+                    userEmail: user.email,
+                    cardId: card.card.id
+                }
+                socket.emit('login', data2);
+                socket.emit('edit-checklist', data.checklist)
             } else {
                 alert(data.message)
             }
@@ -53,7 +101,14 @@ export const changeContent = (checklistId, content) => dispatch => {
         .catch(err => console.error(err))
 }
 
-export const toggleChecklist = (checklistId) => dispatch => {
+export const socketToggleChecklist = (data) => dispatch => {
+    dispatch({
+        type: TOGGLE_CHECKLIST,
+        payload: data
+    })
+}
+
+export const toggleChecklist = (checklistId) => (dispatch, getState) => {
     axios.put(`/api/checklist/checked/${checklistId}`)
         .then(res => res.data)
         .then(data => {
@@ -62,6 +117,15 @@ export const toggleChecklist = (checklistId) => dispatch => {
                     type: TOGGLE_CHECKLIST,
                     payload: checklistId
                 })
+                const socket = socketIOClient(SOCKET_ENDPOINT);
+                const { user, card } = getState()
+                const data2 = {
+                    userEmail: user.email,
+                    cardId: card.card.id
+                }
+                socket.emit('login', data2);
+                socket.emit('toggle-checklist', checklistId)
+
             } else {
                 alert(data.message)
             }

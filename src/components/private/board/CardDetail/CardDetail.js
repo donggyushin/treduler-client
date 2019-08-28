@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Title from './Title';
 import { connect } from 'react-redux'
-import { shutDownCard } from '../../../../actions/card'
-import { fetchChecklists } from '../../../../actions/checklist'
-import { fetchComments } from '../../../../actions/comment'
+import { shutDownCard, socketPutDesc } from '../../../../actions/card'
+import { fetchChecklists, socketPostNewChecklist, socketToggleChecklist, socketChangeContent, socketDeleteChecklist } from '../../../../actions/checklist'
+import { fetchComments, socketPostComment, socketDeleteComment } from '../../../../actions/comment'
 import Description from './Description';
 import Checklists from './Checklists';
 import Comments from './Comments';
@@ -70,7 +70,7 @@ class CardDetail extends React.Component {
     componentDidMount() {
         console.log('component did mount')
         document.addEventListener('mousedown', this.handleClickOutside);
-        const { card, fetchChecklists, fetchComments, user, board } = this.props;
+        const { card, fetchChecklists, socketDeleteComment, fetchComments, user, board, socketPutDesc, socketPostNewChecklist, socketToggleChecklist, socketChangeContent, socketDeleteChecklist, socketPostComment } = this.props;
         if (card.id && user.email) {
             fetchChecklists(card.id)
             fetchComments(card.id)
@@ -85,6 +85,29 @@ class CardDetail extends React.Component {
                     cardId: card.id
                 }
                 socket.emit('login', data);
+                socket.on('edit-card-description', data => {
+                    socketPutDesc(data)
+                })
+                socket.on('add-new-checklist', data => {
+                    socketPostNewChecklist(data)
+                })
+                socket.on('toggle-checklist', data => {
+                    socketToggleChecklist(data)
+                })
+                socket.on('edit-checklist', data => {
+                    socketChangeContent(data)
+                })
+                socket.on('delete-checklist', data => {
+                    socketDeleteChecklist(data)
+                })
+                socket.on('add-comment', data => {
+                    socketPostComment(data)
+                })
+
+                socket.on('delete-comment', data => {
+                    socketDeleteComment(data)
+                })
+
             }
 
 
@@ -169,4 +192,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { shutDownCard, fetchChecklists, fetchComments })(CardDetail) 
+export default connect(mapStateToProps, { shutDownCard, fetchChecklists, fetchComments, socketPutDesc, socketPostNewChecklist, socketToggleChecklist, socketChangeContent, socketDeleteChecklist, socketPostComment, socketDeleteComment })(CardDetail) 
