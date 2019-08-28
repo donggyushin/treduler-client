@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { FETCH_ALL_LIST_WITH_CARDS, CREATE_NEW_LIST, DELETE_LIST, CREATE_NEW_CARD, DELETE_CARD } from './type';
 import socketIOClient from 'socket.io-client';
+import { ENDPOINT } from '../constants/endpoint';
+const SOCKET_ENDPOINT = ENDPOINT + ":8081"
 
 export const socketDeleteCard = data => dispatch => {
     dispatch({
@@ -18,7 +20,7 @@ export const DeleteCard = (cardId) => (dispatch, getState) => {
                     type: DELETE_CARD,
                     payload: data.card
                 })
-                const endpoint = "http://127.0.0.1:8081"
+                const endpoint = SOCKET_ENDPOINT
                 const socket = socketIOClient(endpoint);
                 const { user, board } = getState()
                 const boardId = board.board.id;
@@ -58,7 +60,7 @@ export const CreateNewCard = (listId, title) => (dispatch, getState) => {
                     type: CREATE_NEW_CARD,
                     payload: data.card
                 })
-                const endpoint = "http://127.0.0.1:8081"
+                const endpoint = SOCKET_ENDPOINT
                 const socket = socketIOClient(endpoint);
                 const { user, board } = getState()
                 const boardId = board.board.id;
@@ -95,7 +97,7 @@ export const DeleteList = (listId) => (dispatch, getState) => {
                     type: DELETE_LIST,
                     payload: listId
                 })
-                const endpoint = "http://127.0.0.1:8081"
+                const endpoint = SOCKET_ENDPOINT
                 const socket = socketIOClient(endpoint);
                 const { user, board } = getState()
                 const boardId = board.board.id;
@@ -137,7 +139,7 @@ export const createNewList = (title, boardId) => (dispatch, getState) => {
                     type: CREATE_NEW_LIST,
                     payload: newList
                 })
-                const endpoint = "http://127.0.0.1:8081"
+                const endpoint = SOCKET_ENDPOINT
                 const socket = socketIOClient(endpoint);
                 const { user } = getState()
                 const data2 = {

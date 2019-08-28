@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { FETCH_CHECKLISTS, TOGGLE_CHECKLIST, CHANGE_CONTENT, DELETE_CHECKLIST, POST_NEW_CHECKLIST } from './type';
 import socketIOClient from 'socket.io-client';
-const SOCKET_ENDPOINT = 'http://127.0.0.1:8082'
+import { ENDPOINT } from '../constants/endpoint';
+const SOCKET_ENDPOINT = ENDPOINT + ':8082'
 
 export const socketPostNewChecklist = data => dispatch => {
     dispatch({

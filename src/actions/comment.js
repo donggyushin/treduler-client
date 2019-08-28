@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { FETCH_COMMENTS, POST_COMMENT, DELETE_COMMENT } from './type';
 import socketIOClient from 'socket.io-client';
-const SOCKET_ENDPOINT = 'http://127.0.0.1:8082'
+import { ENDPOINT } from '../constants/endpoint';
+const SOCKET_ENDPOINT = ENDPOINT + ':8082'
 
 export const socketDeleteComment = data => dispatch => {
     dispatch({

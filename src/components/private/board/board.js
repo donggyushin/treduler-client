@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet'
 import CardDetail from './CardDetail';
 import ChangeProfile from '../main/ChangeProfile';
 import socketIOClient from 'socket.io-client';
+import { ENDPOINT } from '../../../constants/endpoint';
 
 const Container = styled.div`
     width:100%;
@@ -57,7 +58,7 @@ class Board extends React.Component {
     state = {
         loading: true,
         addNewList: false,
-        endpoint: "http://127.0.0.1:8081",
+        endpoint: ENDPOINT + ":8081",
         socketConnection: 0
     }
 

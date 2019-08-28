@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux'
 import { inviteNewMember } from '../../../../../../../actions/team'
 import socketIOClient from 'socket.io-client';
+import { ENDPOINT } from '../../../../../../../constants/endpoint';
 
 const Container = styled.div`
     position:absolute;
@@ -207,7 +208,7 @@ class InviteMemberForm extends React.Component {
     state = {
         buttonDisabled: true,
         email: "",
-        endpoint: 'http://127.0.0.1:8080'
+        endpoint: ENDPOINT + ':8080'
     }
 
     render() {

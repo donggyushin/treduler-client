@@ -9,6 +9,7 @@ import Description from './Description';
 import Checklists from './Checklists';
 import Comments from './Comments';
 import socketIOClient from 'socket.io-client';
+import { ENDPOINT } from '../../../../constants/endpoint';
 
 const Container = styled.div`
     position:absolute;
@@ -54,7 +55,7 @@ const GreyThinText = styled.div`
 const Margin = styled.div`
     margin-top:30px;
 `
-const SOCKET_ENDPOINT = "http://127.0.0.1:8082"
+const SOCKET_ENDPOINT = ENDPOINT + ":8082"
 const socket = socketIOClient(SOCKET_ENDPOINT);
 
 class CardDetail extends React.Component {
