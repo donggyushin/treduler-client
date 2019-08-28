@@ -6,6 +6,9 @@ import { turnOnTeamPhotoChangeForm } from '../../../../../actions/TeamPhotoChang
 const Container = styled.div`
     width:650px;
     display:flex;
+    @media (max-width: 650px) {
+        width:90%;
+    }
 `
 
 const Column = styled.div`
@@ -25,7 +28,7 @@ const TeamPhoto = styled.img`
     width:100%;
     min-height:85px;
     cursor: pointer;
-    object-fit: contain;
+    object-fit: cover;
 `
 
 const TeamName = styled.div`

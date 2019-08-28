@@ -10,6 +10,9 @@ const Container = styled.div`
     align-items:flex-start;
     width:1104px;
     margin-top:10px;
+    @media (max-width:1104px){
+        width:90%;
+    }
 `
 
 class MemberLists extends React.Component {

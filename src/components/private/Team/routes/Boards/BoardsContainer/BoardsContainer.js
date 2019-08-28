@@ -8,6 +8,9 @@ const Container = styled.div`
         margin-top: 49px;
         display:flex;
         flex-wrap: wrap;
+        @media (max-width: 1124px) {
+            width:90%;
+        }
 `
 
 class BoardsContainer extends React.Component {

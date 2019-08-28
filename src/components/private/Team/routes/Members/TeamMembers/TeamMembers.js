@@ -9,6 +9,9 @@ const Container = styled.div`
     justify-content:flex-start;
     align-items:flex-start;
     margin-top:36px;
+    @media (max-width:1104px){
+        width:90%;
+    }
 
 `
 
