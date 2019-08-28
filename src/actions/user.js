@@ -39,11 +39,23 @@ export const acceptInvitation = (teamId) => dispatch => {
 
 export const changeProfilePhotoV2 = (profilePhoto) => dispatch => {
     const token = localStorage.getItem('jwt');
-    axios.post(`/api/user/profile`, profilePhoto, {
+    axios.post(`/api/user/profile`, { profilePhoto }, {
         headers: {
             token
         }
     })
+        .then(res => res.data)
+        .then(data => {
+            if (data.ok) {
+                dispatch({
+                    type: CHANGE_PROFILE_PHOTO,
+                    payload: data.profilePhoto
+                })
+            } else {
+                alert(data.message)
+            }
+        })
+        .catch(err => console.error(err))
 }
 
 export const changeProfilePhoto = (profilePhoto) => dispatch => {

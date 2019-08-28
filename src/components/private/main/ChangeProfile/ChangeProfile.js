@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
 import { changeProfileFalse } from '../../../../actions/changeProfile'
-import { changeProfilePhoto } from '../../../../actions/user'
+import { changeProfilePhoto, changeProfilePhotoV2 } from '../../../../actions/user'
 
 const Container = styled.div`
     position:absolute;
@@ -109,7 +109,7 @@ class ChangeProfile extends React.Component {
 
     render() {
         const { profilePhoto, buttonDisable } = this.state
-        const { changeInput, saveButtonClicked } = this;
+        const { changeInput, saveButtonClickedV2 } = this;
         return <Container>
             <Card ref={this.setWrapperRef}>
                 <ProfileImageContainer>
@@ -117,7 +117,7 @@ class ChangeProfile extends React.Component {
                 </ProfileImageContainer>
 
                 <Input onChange={changeInput} type={'file'} />
-                <Button onClick={saveButtonClicked} disabled={buttonDisable}>Save</Button>
+                <Button onClick={saveButtonClickedV2} disabled={buttonDisable}>Save</Button>
 
 
             </Card>
@@ -125,7 +125,7 @@ class ChangeProfile extends React.Component {
     }
 
     saveButtonClickedV2 = () => {
-        const { changeProfileFalse } = this.props;
+        const { changeProfileFalse, changeProfilePhotoV2 } = this.props;
         const { imageFile } = this.state;
         const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/blog-naver-com-donggyu-00/upload'
         const CLOUDINARY_UPLOAD_PRESET = 'ndp6lsvf';
@@ -140,7 +140,9 @@ class ChangeProfile extends React.Component {
         xhr.send(formData);
         const imageResponse = JSON.parse(xhr.responseText);
         const imagePath = imageResponse.secure_url;
-
+        console.log('image path: ', imagePath)
+        changeProfilePhotoV2(imagePath)
+        changeProfileFalse()
     }
 
     saveButtonClicked = () => {
@@ -173,4 +175,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { changeProfileFalse, changeProfilePhoto })(ChangeProfile)
+export default connect(mapStateToProps, { changeProfilePhotoV2, changeProfileFalse, changeProfilePhoto })(ChangeProfile)

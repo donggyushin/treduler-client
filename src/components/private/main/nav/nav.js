@@ -4,6 +4,7 @@ import PopUpStatusBar from './PopupStatusbar/popupStatusbar';
 import HomeIcon from './HomeIcon';
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../../../actions/user'
+import { changeProfileTrue } from '../../../../actions/changeProfile'
 import { addNumberOneUnreadNotificationNumbers } from '../../../../actions/notification'
 import BellIcon from './BellIcon';
 import socketIOClient from 'socket.io-client'
@@ -77,6 +78,7 @@ const ProfileImage = styled.img`
     width:100%;
     height:100%;
     cursor: pointer;
+    object-fit: contain;
 `
 
 
@@ -162,9 +164,12 @@ class Navigation extends React.Component {
     }
 
     makePopupVisible = () => {
+        console.log('profile photo clicked')
         this.setState({
             popupStatusBarVisible: true
         })
+        const { changeProfileTrue } = this.props;
+        changeProfileTrue()
     }
 
     makePopunInvisible = () => {
@@ -179,4 +184,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { getUserInfo, addNumberOneUnreadNotificationNumbers, getUnreadNotificationsNumber })(Navigation) 
+export default connect(mapStateToProps, { changeProfileTrue, getUserInfo, addNumberOneUnreadNotificationNumbers, getUnreadNotificationsNumber })(Navigation) 
