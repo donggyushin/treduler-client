@@ -85,7 +85,14 @@ class MemberItem extends React.Component {
 
     leaveButtonClicked = () => {
         const { getOutOfTeam, team } = this.props;
-        getOutOfTeam(team.id)
+
+        if (window.confirm('Are you sure you want to out this team?')) {
+            // Save it!
+            getOutOfTeam(team.id)
+        } else {
+            // Do nothing!
+        }
+
     }
 }
 

@@ -4,12 +4,14 @@ import Copyright from '../../global/copyright';
 import { connect } from 'react-redux'
 import { loginUser } from '../../../actions/authenticationActions'
 import { Helmet } from 'react-helmet'
+import InputEmailToFindPassword from './InputEmailToFindPassword';
 
 
 const Container = styled.div`
     display:flex;
     flex-direction:column;
     align-items:center;
+    position: relative;
 `;
 
 const LoginForm = styled.div`
@@ -44,7 +46,7 @@ width: 97.5%;
     `
 
 const Button = styled.button`
-    width: 100%;
+    width: 98%;
     background:${props => props.disabled ? `#EDEFF0` : `#27ae60`};
     border-radius: 4px;
     border: 1px solid #CDD2D4;
@@ -62,15 +64,25 @@ const Margin = styled.div`
     height:100px;
 `
 
+const ForgotPassword = styled.div`
+    color:#0984e3;
+    cursor: pointer;
+    margin-bottom:10px;
+    &:hover {
+        color:#74b9ff;
+    }
+`
+
 class Login extends React.Component {
     state = {
         email: "",
         password: "",
-        buttonDisabled: true
+        buttonDisabled: true,
+        inputEmailToFindPassword: false
     }
     render() {
-        const { handleInput, loginButtonClicked, enterKeyPressed } = this;
-        const { email, password, buttonDisabled } = this.state;
+        const { handleInput, loginButtonClicked, enterKeyPressed, TurnInputEmailToFindPasswordOn, TurnInputEmailToFindPasswordDown } = this;
+        const { email, password, buttonDisabled, inputEmailToFindPassword } = this.state;
         return <Container>
             <Helmet>
                 <title>Login | Treduler</title>
@@ -85,11 +97,31 @@ class Login extends React.Component {
                     Password
                 </NormalText>
                 <Input onKeyPress={enterKeyPressed} type={'password'} name={'password'} value={password} onChange={handleInput} placeholder={'e.g., **********'} />
+                <ForgotPassword onClick={TurnInputEmailToFindPasswordOn}>
+                    Don't you remember your password?
+                </ForgotPassword>
                 <Button onClick={loginButtonClicked} disabled={buttonDisabled}>Login</Button>
             </LoginForm>
             <Margin />
             <Copyright />
+            {inputEmailToFindPassword && <InputEmailToFindPassword TurnInputEmailToFindPasswordDown={TurnInputEmailToFindPasswordDown} />}
         </Container>
+    }
+
+    TurnInputEmailToFindPasswordDown = () => {
+        if (this.state.inputEmailToFindPassword === true) {
+            this.setState({
+                inputEmailToFindPassword: false
+            })
+        }
+    }
+
+    TurnInputEmailToFindPasswordOn = () => {
+        if (this.state.inputEmailToFindPassword === false) {
+            this.setState({
+                inputEmailToFindPassword: true
+            })
+        }
     }
 
     enterKeyPressed = (e) => {
