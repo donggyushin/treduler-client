@@ -37,17 +37,34 @@ cursor: pointer;
 `
 
 const NormalText = styled.div`
-    color:#172b4d;
-    margin-left:12px;
+    color: #172b4d;
+    margin-left: 6px;
     cursor: pointer;
+    margin-right: 6px;
+    padding-left: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 2px;
+    &:hover {
+    background: rgba(0,0,0,0.03);
+    }
 `
 
 const LogoutText = styled.div`
 color: #172b4d;
-    margin-left: 12px;
+margin-left: 6px;
+margin-right: 6px;
+padding-left: 3px;
+padding-top: 3px;
+padding-bottom: 3px;
+border-radius: 2px;
+width:89%;
     position: absolute;
     bottom: 10px;
     cursor: pointer;
+    &:hover {
+    background: rgba(0,0,0,0.03);
+    }
 `
 
 const DividerAboveLogout = styled.div`
@@ -124,7 +141,6 @@ class PopUpStatusBar extends React.Component {
                 <NormalText onClick={changeProfileButtonClicked}>
                     Change profile
                 </NormalText>
-                <DividerAboveLogout />
                 <LogoutText onClick={logoutUser}>Logout</LogoutText>
 
             </PopupStateBar>

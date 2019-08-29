@@ -9,6 +9,7 @@ import { Route, Switch } from "react-router-dom";
 import Boards from './routes/Boards'
 import Members from './routes/Members';
 import TeamPhotoChangeForm from './TeamPhotoChangeForm';
+import CreateNewTeamBoardForm from '../main/CreateNewTeamBoardForm';
 
 const Container = styled.div`
     display:flex;
@@ -31,7 +32,7 @@ class Team extends React.Component {
 
 
     render() {
-        const { teamPhotoChangeView } = this.props;
+        const { teamPhotoChangeView, createNewTeamBoardView } = this.props;
         return <Container>
             <Navagation />
             <Header />
@@ -41,13 +42,15 @@ class Team extends React.Component {
                 <Route path="/team/:id/members" component={Members} />
             </Switch>
             {teamPhotoChangeView && <TeamPhotoChangeForm />}
+            {createNewTeamBoardView && <CreateNewTeamBoardForm />}
         </Container>
     }
 }
 
 const mapStateToProps = state => {
     return {
-        teamPhotoChangeView: state.TeamPhotoChangeForm.view
+        teamPhotoChangeView: state.TeamPhotoChangeForm.view,
+        createNewTeamBoardView: state.createNewTeamBoard.view
     }
 }
 

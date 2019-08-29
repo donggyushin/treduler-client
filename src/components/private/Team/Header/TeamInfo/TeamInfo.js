@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux'
 import { turnOnTeamPhotoChangeForm } from '../../../../../actions/TeamPhotoChangeForm'
+import EditTeamDescriptionForm from './EditTeamDescriptionForm';
 
 const Container = styled.div`
     width:650px;
@@ -131,9 +132,13 @@ outline:none;
 `
 
 class TeamInfo extends React.Component {
+    state = {
+        edit: false
+    }
     render() {
         const { team } = this.props;
-        const { photoClicked } = this;
+        const { photoClicked, turnOnEditState } = this;
+        const { edit } = this.state;
         return <Container>
             <Column>
                 <TeamPhotoContainer>
@@ -142,10 +147,20 @@ class TeamInfo extends React.Component {
             </Column>
             <Column>
                 <TeamName>{team.name}</TeamName>
-                <TeamDescription>{team.description ? team.description : 'No description yet'}</TeamDescription>
-                <EditTeamProfileButton>Edit team profile</EditTeamProfileButton>
+                {!edit ? <TeamDescription>{team.description ? team.description : 'No description yet'}</TeamDescription> : <EditTeamDescriptionForm />}
+                {edit === false && <EditTeamProfileButton onClick={turnOnEditState}>Edit team profile</EditTeamProfileButton>}
+
             </Column>
         </Container>
+    }
+
+
+    turnOnEditState = () => {
+        if (this.state.edit === false) {
+            this.setState({
+                edit: true
+            })
+        }
     }
 
     photoClicked = () => {
@@ -153,6 +168,7 @@ class TeamInfo extends React.Component {
         turnOnTeamPhotoChangeForm()
     }
 }
+
 
 const mapStateToProps = state => {
     return {

@@ -53,9 +53,18 @@ const createNewTeamBoard = (state, action) => {
         }
     })
 
+    const updatedTeam = {
+        ...state.team,
+        boards: [
+            ...state.team.boards,
+            action.payload
+        ]
+    }
+
     return {
         ...state,
-        teams: updatedTeams
+        teams: updatedTeams,
+        team: updatedTeam
     }
 }
 

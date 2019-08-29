@@ -74,9 +74,10 @@ class CreateNewTeamBoardForm extends React.Component {
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
-        const randomNumberBetween0to6 = String(Math.floor(Math.random() * 7))
+        // From 0 to 6
+        const randomNumber = String(Math.floor(Math.random() * 7))
         this.setState({
-            bacgkroundImageNumber: randomNumberBetween0to6,
+            bacgkroundImageNumber: randomNumber,
             loading: false
         })
     }
