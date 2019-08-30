@@ -6,6 +6,7 @@ import PageSendEmail from '../pageSendEmail'
 import CheckEmailPage from '../checkEmailPage';
 import Login from '../login';
 import Main from '../main'
+import PageCheckToken from '../PageCheckToken';
 
 function PublicAppRouter() {
     return (
@@ -17,6 +18,7 @@ function PublicAppRouter() {
                 <Route path={'/check-email-page'} component={CheckEmailPage} />
                 <Route path={'/login'} component={Login} />
                 <Route path={'/loggedOut'} component={LoggedOut} />
+                <Route path={'/check-token'} component={PageCheckToken} />
                 <Route component={Main} />
             </Switch>
         </Router>

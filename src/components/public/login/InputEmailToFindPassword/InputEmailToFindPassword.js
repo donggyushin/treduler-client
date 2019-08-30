@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios'
 
 const Container = styled.div`
     position:absolute;
@@ -108,7 +109,7 @@ class InputEmailToFindPassword extends React.Component {
 
     render() {
         const { buttonDisabled, email } = this.state;
-        const { handleInput } = this;
+        const { handleInput, sendEmailButtonClicked } = this;
         const { TurnInputEmailToFindPasswordDown } = this.props;
         return <Container>
             <Card ref={this.setWrapperRef}>
@@ -116,10 +117,24 @@ class InputEmailToFindPassword extends React.Component {
                     Forgot password?
                 </Title>
                 <Input onChange={handleInput} name={'email'} value={email} autoFocus={true} placeholder={'axvb20@gmeil.com'} />
-                <Button disabled={buttonDisabled}>Send email</Button>
+                <Button onClick={sendEmailButtonClicked} disabled={buttonDisabled}>Send email</Button>
                 <X onClick={TurnInputEmailToFindPasswordDown}>X</X>
             </Card>
         </Container>
+    }
+
+    sendEmailButtonClicked = () => {
+        const { email } = this.state;
+        axios.put(`/api/user/find-password/${email}`)
+            .then(res => res.data)
+            .then(data => {
+                if (data.ok) {
+                    window.location.href = "/check-token"
+                } else {
+                    alert(data.message)
+                }
+            })
+            .catch(err => console.error(err))
     }
 
     handleInput = e => {
