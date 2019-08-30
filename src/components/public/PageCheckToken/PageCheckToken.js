@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Copyright from '../../global/copyright';
+import axios from 'axios'
 
 const Container = styled.div`
     display:flex;
@@ -72,7 +73,7 @@ class PageCheckToken extends React.Component {
     }
     render() {
         const { buttonDisabled, token } = this.state;
-        const { handleInput } = this;
+        const { handleInput, submitButtonClicked } = this;
         return <Container>
             <Card>
                 <Title>Treduler</Title>
@@ -80,12 +81,29 @@ class PageCheckToken extends React.Component {
                     We've sent secret key to your email. Please fill the token.
                 </NormalText>
                 <Input onChange={handleInput} name={'token'} value={token} placeholder={'asdjkljsadjkl@!#aslj2837192...'} />
-                <Button disabled={buttonDisabled}>Submit</Button>
+                <Button onClick={submitButtonClicked} disabled={buttonDisabled}>Submit</Button>
             </Card>
             <CopyRightContainer>
                 <Copyright />
             </CopyRightContainer>
         </Container>
+    }
+
+    submitButtonClicked = () => {
+        const userEmail = window.localStorage.getItem('email')
+        const { token } = this.state;
+        axios.put(`/api/user/set-new-password/${userEmail}`, {
+            token
+        })
+            .then(res => res.data)
+            .then(data => {
+                if (data.ok) {
+                    alert(`We've sent new password to your email`)
+                } else {
+                    alert(data.message)
+                }
+            })
+            .catch(err => console.error(err))
     }
 
     handleInput = e => {

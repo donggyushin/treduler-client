@@ -129,6 +129,7 @@ class InputEmailToFindPassword extends React.Component {
             .then(res => res.data)
             .then(data => {
                 if (data.ok) {
+                    localStorage.setItem('email', email)
                     window.location.href = "/check-token"
                 } else {
                     alert(data.message)
