@@ -1,6 +1,26 @@
 import axios from 'axios';
 import { SET_USER_INFO, CHANGE_PROFILE_PHOTO } from './type';
 
+export const updateUserPassword = (newPassword, existingPassword) => dispatch => {
+    axios.put(`/api/user/update-password`, {
+        newPassword,
+        existingPassword
+    }, {
+            headers: {
+                jwt: localStorage.getItem('jwt')
+            }
+        })
+        .then(res => res.data)
+        .then(data => {
+            if (data.ok) {
+                alert('Your password updated. ;)')
+            } else {
+                alert(data.message)
+            }
+        })
+        .catch(err => console.error(err))
+}
+
 export const getOutOfTeam = (teamId) => dispatch => {
     axios.delete(`/api/user/${teamId}`, {
         headers: {

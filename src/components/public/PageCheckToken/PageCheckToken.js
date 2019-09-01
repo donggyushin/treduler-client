@@ -99,6 +99,7 @@ class PageCheckToken extends React.Component {
             .then(data => {
                 if (data.ok) {
                     alert(`We've sent new password to your email`)
+                    window.location.href = "/login"
                 } else {
                     alert(data.message)
                 }

@@ -10,6 +10,7 @@ import Checklists from './Checklists';
 import Comments from './Comments';
 import socketIOClient from 'socket.io-client';
 import { ENDPOINT } from '../../../../constants/endpoint';
+import ProgressBarComponent from './ProgressBar';
 
 const Container = styled.div`
     position:absolute;
@@ -69,7 +70,6 @@ class CardDetail extends React.Component {
     }
 
     componentDidMount() {
-        console.log('component did mount')
         document.addEventListener('mousedown', this.handleClickOutside);
         const { card, fetchChecklists, socketDeleteComment, fetchComments, user, board, socketPutDesc, socketPostNewChecklist, socketToggleChecklist, socketChangeContent, socketDeleteChecklist, socketPostComment } = this.props;
         if (card.id && user.email) {
@@ -113,6 +113,31 @@ class CardDetail extends React.Component {
 
 
         }
+
+        const { checklists } = this.props;
+        console.log('checklists: ', checklists)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { checklists } = nextProps
+        if (checklists.length === 0) {
+            this.setState({
+                now: 0
+            })
+            return;
+        } else {
+            const totalNumber = checklists.length;
+            let checkedNumber = 0;
+            checklists.map(checklist => {
+                if (checklist.checked === true) {
+                    checkedNumber = checkedNumber + 1
+                }
+            })
+            const percentage = parseInt((checkedNumber / totalNumber) * 100);
+            this.setState({
+                now: percentage
+            })
+        }
     }
 
 
@@ -151,11 +176,12 @@ class CardDetail extends React.Component {
     state = {
         loading: true,
         socketConnection: 0,
-        endpoint: "http://127.0.0.1:8082"
+        endpoint: "http://127.0.0.1:8082",
+        now: 0
     }
 
     render() {
-        const { loading } = this.state;
+        const { loading, now } = this.state;
         const { card } = this.props;
         const { XButtonClicked } = this;
         return <Container>
@@ -169,6 +195,7 @@ class CardDetail extends React.Component {
                     <Description desc={card.description} />
                     <Margin />
                     <Title icon={'fas fa-check-square'} title={'Checklist'} />
+                    <ProgressBarComponent now={now} />
                     <Checklists />
                     <Margin />
                     <Title icon={'fas fa-comment'} title={'Comments'} />
@@ -189,7 +216,8 @@ const mapStateToProps = state => {
     return {
         card: state.card.card,
         user: state.user,
-        board: state.board.board
+        board: state.board.board,
+        checklists: state.checklist.checklists
     }
 }
 

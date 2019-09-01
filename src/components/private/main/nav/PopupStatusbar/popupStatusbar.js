@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../../../actions/authenticationActions'
 import { changeProfileTrue } from '../../../../../actions/changeProfile'
+import { turnNewPasswordFromOn } from '../../../../../actions/NewPasswordFrom'
 
 
 
@@ -128,7 +129,7 @@ class PopUpStatusBar extends React.Component {
     render() {
         const { popupStatusBar, makePopunInvisible, logoutUser } = this.props;
         const { name } = this.props.user;
-        const { changeProfileButtonClicked } = this;
+        const { changeProfileButtonClicked, newPasswordTextClicked } = this;
         return (
             <PopupStateBar ref={this.setWrapperRef} popupStatusBar={popupStatusBar}>
 
@@ -141,10 +142,18 @@ class PopUpStatusBar extends React.Component {
                 <NormalText onClick={changeProfileButtonClicked}>
                     Change profile
                 </NormalText>
+                <NormalText onClick={newPasswordTextClicked}>
+                    New password
+                </NormalText>
                 <LogoutText onClick={logoutUser}>Logout</LogoutText>
 
             </PopupStateBar>
         )
+    }
+
+    newPasswordTextClicked = () => {
+        const { turnNewPasswordFromOn } = this.props;
+        turnNewPasswordFromOn()
     }
 
     changeProfileButtonClicked = () => {
@@ -159,4 +168,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { logoutUser, changeProfileTrue })(PopUpStatusBar) 
+export default connect(mapStateToProps, { turnNewPasswordFromOn, logoutUser, changeProfileTrue })(PopUpStatusBar) 

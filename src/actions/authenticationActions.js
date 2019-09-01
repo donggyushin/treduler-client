@@ -33,7 +33,6 @@ export const loginUser = (email, password) => dispatch => {
             } else {
                 window.localStorage.setItem('email', email)
                 alert(data.message)
-                window.location.href = "/send-email-page"
                 return;
             }
         })

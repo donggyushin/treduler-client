@@ -22,7 +22,9 @@ const TeamImageContainer = styled.div`
 `
 
 const TeamImage = styled.img`
-    width:100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `
 
 const Title = styled.div`

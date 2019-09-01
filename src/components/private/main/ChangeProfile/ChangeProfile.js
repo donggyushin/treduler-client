@@ -34,7 +34,9 @@ const ProfileImageContainer = styled.div`
 `
 
 const ProfileImage = styled.img`
-    width:100%;
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
 `
 
 const Input = styled.input`
