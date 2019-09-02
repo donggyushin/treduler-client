@@ -56,8 +56,7 @@ const GreyThinText = styled.div`
 const Margin = styled.div`
     margin-top:30px;
 `
-const SOCKET_ENDPOINT = ENDPOINT + ":8082"
-const socket = socketIOClient(SOCKET_ENDPOINT);
+
 
 class CardDetail extends React.Component {
 
@@ -71,6 +70,10 @@ class CardDetail extends React.Component {
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
+        const SOCKET_ENDPOINT = ENDPOINT + ":8082"
+        const socket = socketIOClient(SOCKET_ENDPOINT);
+        console.log('component did mount')
+        const { socketConnection } = this.state;
         const { card, fetchChecklists, socketDeleteComment, fetchComments, user, board, socketPutDesc, socketPostNewChecklist, socketToggleChecklist, socketChangeContent, socketDeleteChecklist, socketPostComment } = this.props;
         if (card.id && user.email) {
             fetchChecklists(card.id)
@@ -85,7 +88,12 @@ class CardDetail extends React.Component {
                     userEmail: user.email,
                     cardId: card.id
                 }
-                socket.emit('login', data);
+                if (socketConnection === 0) {
+                    socket.emit('login', data);
+                    this.setState({
+                        socketConnection: this.state.socketConnection + 1
+                    })
+                }
                 socket.on('edit-card-description', data => {
                     socketPutDesc(data)
                 })
@@ -147,11 +155,17 @@ class CardDetail extends React.Component {
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
         console.log('component will unmount')
-        const { board } = this.props;
+        const { board, user, card } = this.props;
+        const data = {
+            userEmail: user.email,
+            cardId: card.id
+        }
         if (board.team) {
 
 
-            socket.emit('leave-card-detail')
+            const SOCKET_ENDPOINT = ENDPOINT + ":8082"
+            const socket = socketIOClient(SOCKET_ENDPOINT);
+            socket.emit('leave-card-detail', data)
         }
     }
 
