@@ -101,7 +101,6 @@ class Navigation extends React.Component {
             socket.emit('login', user)
 
             socket.on("unreadEmailNumbers", () => {
-                console.log('unread email numbers!')
                 addNumberOneUnreadNotificationNumbers()
             })
         }
