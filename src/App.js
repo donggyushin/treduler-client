@@ -7,6 +7,9 @@ import 'antd/dist/antd.css'
 
 class AppContainer extends React.Component {
 
+
+
+
   render() {
     const { isLoggedIn } = this.props.authentication;
     return <App isLoggedIn={isLoggedIn} />
