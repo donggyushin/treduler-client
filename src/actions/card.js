@@ -34,7 +34,7 @@ export const putDesc = (id, desc) => (dispatch, getState) => {
                 }
                 socket.emit('login', data2)
                 socket.emit('edit-card-description', data.card)
-                socket.disconnect()
+
             } else {
                 alert(data.message)
             }
