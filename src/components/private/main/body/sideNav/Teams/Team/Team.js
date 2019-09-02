@@ -6,12 +6,13 @@ const Container = styled.div`
     align-items:center;
     position: relative;
     cursor: pointer;
+    margin-bottom:10px;
 `
 
 const TeamPhotoContainer = styled.div`
     width:30px;
-    height:30px;
-    border-radius:8px;
+    height: 20px;
+    border-radius: 2px;
     overflow:hidden;
     display:flex;
     align-items:center;

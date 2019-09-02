@@ -237,6 +237,7 @@ class InviteMemberForm extends React.Component {
         }
         inviteNewMember(team.id, email)
         socket.emit('send-invitation', user)
+        socket.disconnect()
         shutOffForm()
     }
 

@@ -34,6 +34,7 @@ export const DeleteCard = (cardId) => (dispatch, getState) => {
                 }
                 socket.emit('login', dataToSocket);
                 socket.emit('delete-card', data.card)
+                socket.disconnect()
             } else {
                 alert(data.message)
             }
@@ -74,6 +75,7 @@ export const CreateNewCard = (listId, title) => (dispatch, getState) => {
                 }
                 socket.emit('login', dataToSocket);
                 socket.emit('post-card', data.card)
+                socket.disconnect()
             } else {
                 alert(data.message)
             }
@@ -111,6 +113,7 @@ export const DeleteList = (listId) => (dispatch, getState) => {
                 }
                 socket.emit('login', dataToSocket);
                 socket.emit('delete-list', listId)
+                socket.disconnect()
             } else {
                 alert(data.message)
             }
@@ -152,7 +155,7 @@ export const createNewList = (title, boardId) => (dispatch, getState) => {
                 }
                 socket.emit('login', data2)
                 socket.emit('post-new-list', newList)
-
+                socket.disconnect()
             } else {
                 alert(data.message)
             }

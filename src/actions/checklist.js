@@ -30,6 +30,7 @@ export const postNewChecklist = (cardId, content) => (dispatch, getState) => {
                 }
                 socket.emit('login', data2);
                 socket.emit('add-new-checklist', data.checklist)
+                socket.disconnect()
             } else {
                 alert(data.message)
             }
@@ -61,7 +62,7 @@ export const deleteChecklist = (checklistId) => (dispatch, getState) => {
                 }
                 socket.emit('login', data2);
                 socket.emit('delete-checklist', data.checklist)
-
+                socket.disconnect()
             } else {
                 alert(data.message)
             }
@@ -95,6 +96,7 @@ export const changeContent = (checklistId, content) => (dispatch, getState) => {
                 }
                 socket.emit('login', data2);
                 socket.emit('edit-checklist', data.checklist)
+                socket.disconnect()
             } else {
                 alert(data.message)
             }
@@ -126,7 +128,7 @@ export const toggleChecklist = (checklistId) => (dispatch, getState) => {
                 }
                 socket.emit('login', data2);
                 socket.emit('toggle-checklist', checklistId)
-
+                socket.disconnect()
             } else {
                 alert(data.message)
             }

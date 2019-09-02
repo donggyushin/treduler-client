@@ -28,6 +28,7 @@ export const deleteComment = commentId => (dispatch, getState) => {
                 }
                 socket.emit('login', dataToSocketLogin)
                 socket.emit('delete-comment', data.comment)
+                socket.disconnect()
             } else {
                 alert(data.message)
             }
@@ -65,7 +66,7 @@ export const postComment = (cardId, message) => (dispatch, getState) => {
                 }
                 socket.emit('login', dataToSocketLogin)
                 socket.emit('add-comment', data.comment)
-
+                socket.disconnect()
             } else {
                 alert(data.message)
             }
