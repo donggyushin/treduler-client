@@ -1,4 +1,4 @@
-let URL = "http://www.treduler.nl"
+let URL = "http://www.treduler.de"
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     // dev code
