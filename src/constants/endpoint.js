@@ -1,4 +1,4 @@
-let URL = "https://15.164.213.149"
+let URL = "/socket.io"
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     // dev code
