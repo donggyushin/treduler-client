@@ -13,6 +13,7 @@ import CardDetail from './CardDetail';
 import ChangeProfile from '../main/ChangeProfile';
 import socketIOClient from 'socket.io-client';
 import { ENDPOINT } from '../../../constants/endpoint';
+import axios from 'axios'
 
 const Container = styled.div`
     width:100%;
@@ -81,6 +82,19 @@ class Board extends React.Component {
                 socketCreateNewList(data)
             })
         }
+
+        axios.get(`/api/user/check-authorization/${id}`, {
+            headers: {
+                jwt: localStorage.getItem('jwt')
+            }
+        }).then(res => res.data)
+            .then(data => {
+                console.log('data: ', data)
+                if (data.authorized === false) {
+                    window.location.href = "/";
+                }
+            })
+            .catch(err => console.error(err))
 
 
     }
