@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM, CREATE_NEW_TEAM_BOARD, CHANGE_TEAM_PHOTO } from './type';
+import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM, CREATE_NEW_TEAM_BOARD, CHANGE_TEAM_PHOTO, CREATE_NEW_TEAM_BOARD2 } from './type';
 
 export const changeTeamPhoto = (filePath, teamId) => dispatch => {
     axios.put(`/api/team/teamPhoto/${teamId}`, {
@@ -19,8 +19,28 @@ export const changeTeamPhoto = (filePath, teamId) => dispatch => {
         .catch(err => console.error(err))
 }
 
+export const createNewTeamBoard2 = (title, backgroundImage, team) => dispatch => {
+    axios.post(`/api/team/board`, {
+        title,
+        backgroundImage,
+        team
+    })
+        .then(res => res.data)
+        .then(data => {
+            if (data.ok) {
+                dispatch({
+                    type: CREATE_NEW_TEAM_BOARD2,
+                    payload: data.board
+                })
+            } else {
+                alert(data.message)
+            }
+        })
+        .catch(err => console.error(err))
+}
+
 export const createNewTeamBoard = (title, backgroundImage, team) => dispatch => {
-    console.log('create new team board')
+    // console.log('create new team board')
     axios.post(`/api/team/board`, {
         title,
         backgroundImage,
@@ -33,6 +53,7 @@ export const createNewTeamBoard = (title, backgroundImage, team) => dispatch => 
                     type: CREATE_NEW_TEAM_BOARD,
                     payload: data.board
                 })
+
             } else {
                 alert(data.message)
             }
@@ -44,10 +65,10 @@ export const inviteNewMember = (teamId, email) => dispatch => {
         email,
         teamId
     }, {
-            headers: {
-                jwt: localStorage.getItem('jwt')
-            }
-        })
+        headers: {
+            jwt: localStorage.getItem('jwt')
+        }
+    })
         .then(res => res.data)
         .then(data => {
             if (data.ok) {
@@ -81,10 +102,10 @@ export const postNewTeam = (name, description) => dispatch => {
         name,
         description
     }, {
-            headers: {
-                jwt: localStorage.getItem('jwt')
-            }
-        })
+        headers: {
+            jwt: localStorage.getItem('jwt')
+        }
+    })
         .then(res => res.data)
         .then(data => {
             if (data.ok) {

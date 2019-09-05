@@ -1,4 +1,4 @@
-import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM, CREATE_NEW_TEAM_BOARD, CHANGE_TEAM_PHOTO } from "../actions/type";
+import { FETCH_TEAMS, POST_NEW_TEAM, FETCH_A_TEAM, CREATE_NEW_TEAM_BOARD, CHANGE_TEAM_PHOTO, CREATE_NEW_TEAM_BOARD2 } from "../actions/type";
 
 const initialState = {
     teams: [],
@@ -15,6 +15,8 @@ export default function (state = initialState, action) {
             return fetchATeam(state, action)
         case CREATE_NEW_TEAM_BOARD:
             return createNewTeamBoard(state, action)
+        case CREATE_NEW_TEAM_BOARD2:
+            return createNewTeamBoard2(state, action)
         case CHANGE_TEAM_PHOTO:
             return changeTeamPhoto(state, action)
         default:
@@ -29,6 +31,20 @@ const changeTeamPhoto = (state, action) => {
             ...state.team,
             photo: action.payload.photo
         }
+    }
+}
+
+const createNewTeamBoard2 = (state, action) => {
+    const updatedTeam = {
+        ...state.team,
+        boards: [
+            ...state.team.boards,
+            action.payload
+        ]
+    }
+    return {
+        ...state,
+        team: updatedTeam
     }
 }
 
@@ -53,13 +69,19 @@ const createNewTeamBoard = (state, action) => {
         }
     })
 
-    const updatedTeam = {
-        ...state.team,
-        boards: [
-            ...state.team.boards,
-            action.payload
-        ]
+    let updatedTeam = {}
+
+    if (state.team.boards) {
+
+        updatedTeam = {
+            ...state.team,
+            boards: [
+                ...state.team.boards,
+                action.payload
+            ]
+        }
     }
+
 
     return {
         ...state,
