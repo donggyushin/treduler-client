@@ -14,6 +14,8 @@ import ChangeProfile from '../main/ChangeProfile';
 import socketIOClient from 'socket.io-client';
 import { ENDPOINT } from '../../../constants/endpoint';
 import axios from 'axios'
+import ChattingButton from './ChattingButton';
+import ChattingBox from './ChattingBox';
 
 const Container = styled.div`
     width:100%;
@@ -154,7 +156,7 @@ class Board extends React.Component {
 
 
     render() {
-        const { board, lists, cardVisible, changeProfile } = this.props;
+        const { board, lists, cardVisible, changeProfile, chat } = this.props;
         const { loading, addNewList } = this.state;
         const { toggleAddNewList } = this;
         return <Container>
@@ -177,6 +179,8 @@ class Board extends React.Component {
             </ListsContainer>
             {cardVisible && <CardDetail />}
             {changeProfile && <ChangeProfile />}
+            <ChattingButton />
+            {chat.visiable && <ChattingBox />}
         </Container>
     }
 
@@ -194,7 +198,8 @@ const mapStateToProps = state => {
         lists: state.list.lists,
         cardVisible: state.card.visible,
         changeProfile: state.changeProfile.changeProfile,
-        user: state.user
+        user: state.user,
+        chat: state.Chat
     }
 }
 

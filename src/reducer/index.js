@@ -15,6 +15,7 @@ import notification from './notification'
 import Invitation from './Invitation'
 import TeamPhotoChangeForm from './TeamPhotoChangeForm'
 import NewPasswordForm from './NewPasswordForm'
+import Chat from './Chat'
 
 
 const initialState = {};
@@ -34,7 +35,8 @@ const allReducers = combineReducers({
     notification,
     Invitation,
     TeamPhotoChangeForm,
-    NewPasswordForm
+    NewPasswordForm,
+    Chat
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
