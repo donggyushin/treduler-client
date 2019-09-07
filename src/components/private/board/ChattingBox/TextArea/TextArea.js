@@ -24,7 +24,7 @@ class TextAreaComponent extends React.Component {
         const textArea = document.getElementById("chattingTextArea")
         console.log('1', textArea.offsetHeight + textArea.scrollTop)
         console.log('2', textArea.scrollHeight)
-        if (textArea.scrollHeight - (textArea.offsetHeight + textArea.scrollTop) < 50) {
+        if (textArea.scrollHeight - (textArea.offsetHeight + textArea.scrollTop) < 100) {
             if (this.props.chats !== prevProps.chats) {
                 this.scrollToBottom();
             }
