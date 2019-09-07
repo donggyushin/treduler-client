@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Nav from '../main/nav'
 import { connect } from 'react-redux';
 import { fetABoard } from '../../../actions/board'
+import { receiveChattingMessage } from '../../../actions/chat'
 import { fetAllListsWithCards, socketCreateNewList, socketDeleteList, socketCreateNewCard, socketDeleteCard } from '../../../actions/list'
 import Title from './Title';
 import List from './List';
@@ -72,17 +73,24 @@ class Board extends React.Component {
         fetABoard(id)
         fetAllListsWithCards(id)
         if (board.id && user.email) {
-            const socket = socketIOClient(this.state, endpoint);
-            const data = {
-                board,
-                user
-            }
-            socket.emit('login', data)
-            console.log('1')
+            // const socket = socketIOClient(this.state.endpoint);
+            // const data = {
+            //     board,
+            //     user
+            // }
+            // socket.emit('login', data)
 
-            socket.on('post-new-list', data => {
-                socketCreateNewList(data)
-            })
+
+            // socket.on('post-new-list', data => {
+            //     socketCreateNewList(data)
+            // })
+            const chattingSocket = socketIOClient(ENDPOINT + ":8083")
+            const dataToChattingSocket = {
+                user,
+                boardId: board.id
+            }
+            chattingSocket.emit('login', dataToChattingSocket)
+
         }
 
         axios.get(`/api/user/check-authorization/${id}`, {
@@ -112,6 +120,18 @@ class Board extends React.Component {
         if (nextProps.board !== this.props.board) {
             if (nextProps.board.id && this.props.user.email) {
                 if (nextProps.board.team) {
+
+                    const chattingSocket = socketIOClient(ENDPOINT + ":8083")
+                    const dataToChattingSocket = {
+                        user: this.props.user,
+                        boardId: nextProps.board.id
+                    }
+                    chattingSocket.emit('login', dataToChattingSocket)
+                    chattingSocket.on('sendMessage', data => {
+                        console.log('receive message')
+                        const { receiveChattingMessage } = this.props;
+                        receiveChattingMessage(data)
+                    })
 
                     if (this.state.socketConnection === 0) {
                         const socket = socketIOClient(this.state.endpoint);
@@ -179,7 +199,8 @@ class Board extends React.Component {
             </ListsContainer>
             {cardVisible && <CardDetail />}
             {changeProfile && <ChangeProfile />}
-            <ChattingButton />
+            {board.team && <ChattingButton />}
+
             {chat.visiable && <ChattingBox />}
         </Container>
     }
@@ -203,4 +224,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetABoard, fetAllListsWithCards, socketCreateNewList, socketDeleteList, socketCreateNewCard, socketDeleteCard })(Board) 
+export default connect(mapStateToProps, { fetABoard, fetAllListsWithCards, socketCreateNewList, socketDeleteList, socketCreateNewCard, socketDeleteCard, receiveChattingMessage })(Board) 

@@ -2,13 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-    background:#353b48;
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    padding-right:5px;
-    padding-bottom:5px;
-    padding-top:5px;
+    background: #dfe1e6;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    box-shadow: 0 1px 1px #777;
 `
 const XButton = styled.div`
     background: #c23616;

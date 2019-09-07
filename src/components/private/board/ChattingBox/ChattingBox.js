@@ -1,25 +1,20 @@
 import React from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import styled from 'styled-components';
 import ChattingBackground from '../../../../assets/chatBackground/chatting-background.png'
 import Header from './Header';
+import { connect } from 'react-redux';
+import { turnChattingBoxDown } from '../../../../actions/chat'
 
-const RightToLeft = keyframes`
-    from {
-        right: -500px;
-    }
-    to {
-        right: 5px;
-    }
-`
+import { TweenMax } from 'gsap'
+import Input from './Input';
+import TextArea from './TextArea';
 
 const Container = styled.div`
-    animation-name:${RightToLeft};
-    animation-duration:0.4s;
     background-image: url(${ChattingBackground});
     position: absolute;
     overflow:hidden;
     bottom: 5px;
-    right: 5px;
+    right: -500px;
     width: 400px;
     height: 80%;
     border-radius: 2px;
@@ -27,24 +22,37 @@ const Container = styled.div`
 `
 
 class ChattingBox extends React.Component {
-    componentWillMount() {
-        this.setState({
-            leftToRight: false
+
+    componentDidMount() {
+        TweenMax.to("#chattingBox", 0.3, {
+            right: '5px'
         })
     }
+
 
     render() {
 
         const { xButtonClicked } = this;
-        return <Container >
+        return <Container id={'chattingBox'}>
             <Header xButtonClicked={xButtonClicked} />
-            Chatting Box
+            <TextArea />
+            <Input />
         </Container>
     }
 
     xButtonClicked = () => {
-        console.log('xbutton clicked')
+        const { turnChattingBoxDown } = this.props;
+        TweenMax.to("#chattingBox", 0.3, {
+            right: '-500px'
+        })
+        setTimeout(() => {
+            turnChattingBoxDown()
+        }, 300);
     }
 }
 
-export default ChattingBox;
+const mapStateToProps = state => {
+    return {}
+}
+
+export default connect(mapStateToProps, { turnChattingBoxDown })(ChattingBox);

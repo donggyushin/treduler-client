@@ -23,16 +23,17 @@ const Icon = styled.i`
 
 class ChattingButton extends React.Component {
     render() {
-        const { buttonClicked } = this;
-        return <Container onClick={buttonClicked}>
+        const { chattingButtonClicked } = this;
+        return <Container onClick={chattingButtonClicked} >
             <Icon className={'far fa-comment-dots'} />
         </Container>
     }
 
-    buttonClicked = () => {
+    chattingButtonClicked = () => {
         const { turnChattingBoxOn } = this.props;
         turnChattingBoxOn()
     }
+
 }
 
 const mapStateToProps = state => {
