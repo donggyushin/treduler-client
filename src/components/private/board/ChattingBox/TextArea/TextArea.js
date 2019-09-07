@@ -15,9 +15,28 @@ const TextArea = styled.div`
 
 class TextAreaComponent extends React.Component {
 
+    componentDidMount() {
+        this.scrollToBottom();
+    }
+
+
+    componentDidUpdate(prevProps) {
+        const textArea = document.getElementById("chattingTextArea")
+        console.log('1', textArea.offsetHeight + textArea.scrollTop)
+        console.log('2', textArea.scrollHeight)
+        if (textArea.scrollHeight - (textArea.offsetHeight + textArea.scrollTop) < 50) {
+            if (this.props.chats !== prevProps.chats) {
+                this.scrollToBottom();
+            }
+        }
+        if (textArea.offsetHeight + textArea.scrollTop === textArea.scrollHeight) {
+
+        }
+    }
+
     render() {
         const { user, chats } = this.props;
-        return <TextArea>
+        return <TextArea id={'chattingTextArea'}>
             {chats && chats.map((chat, index) => {
                 if (chat.user.email === user.email) {
                     console.log(typeof (chat.time))
@@ -35,6 +54,10 @@ class TextAreaComponent extends React.Component {
                 }
             })}
         </TextArea>
+    }
+
+    scrollToBottom = () => {
+        document.getElementById('chattingTextArea').scrollTop = document.getElementById('chattingTextArea').scrollHeight;
     }
 }
 
