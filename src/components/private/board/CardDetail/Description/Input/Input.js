@@ -62,8 +62,10 @@ class InputComponent extends React.Component {
      */
     handleClickOutside(event) {
         if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-            const { inputModeDown } = this.props;
-            inputModeDown()
+
+            const { saveButtonClicked } = this;
+            saveButtonClicked()
+
         }
     }
     state = {
