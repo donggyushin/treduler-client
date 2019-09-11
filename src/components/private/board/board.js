@@ -99,7 +99,6 @@ class Board extends React.Component {
             }
         }).then(res => res.data)
             .then(data => {
-                console.log('data: ', data)
                 if (data.authorized === false) {
                     window.location.href = "/";
                 }
@@ -127,6 +126,9 @@ class Board extends React.Component {
                         boardId: nextProps.board.id
                     }
                     chattingSocket.emit('login', dataToChattingSocket)
+                    chattingSocket.on('allMembers', members => {
+                        console.log('all members in board', members)
+                    })
                     chattingSocket.on('sendMessage', data => {
                         console.log('receive message')
                         const { receiveChattingMessage } = this.props;
