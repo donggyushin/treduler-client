@@ -52,6 +52,7 @@ class PageSendEmail extends React.Component {
             <NormalWhiteText>Please check your email</NormalWhiteText>
             <TinyWhiteText>Don't you receive any mail?</TinyWhiteText>
             <ResendButton onClick={resendButtonClicked}>Then click here to request sending email</ResendButton>
+            <TinyWhiteText>if You don't receive any email from treduler, check your junk email or send email to developer donggyu9410@gmail.com</TinyWhiteText>
         </Container>
     }
 
