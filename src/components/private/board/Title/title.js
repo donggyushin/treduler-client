@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import MenuComponent from './Menu'
+import MembersInBoard from '../Members';
 
 const Container = styled.div`
         width: 100%;
@@ -57,6 +58,7 @@ class Title extends React.Component {
             <Container>
                 <Row>
                     {text}
+                    <MembersInBoard />
                     <Menu onClick={turnOnMenu}>Show menu</Menu>
                     {menuVisible && <MenuComponent type={action} turnDownMenu={turnDownMenu} />}
                 </Row>

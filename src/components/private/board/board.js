@@ -18,6 +18,7 @@ import axios from 'axios'
 import ChattingButton from './ChattingButton';
 import ChattingBox from './ChattingBox';
 
+
 const Container = styled.div`
     width:100%;
     height:100vh;
@@ -194,6 +195,7 @@ class Board extends React.Component {
             <Nav board={true} />
             <Margin40 />
             <Title text={board.title} />
+
             <ListsContainer>
                 {lists.map(list => <List key={list.id} list={list} />)}
                 {addNewList ? <AddNewListForm toggleAddNewList={toggleAddNewList} /> : <AddNewList toggleAddNewList={toggleAddNewList} />}
